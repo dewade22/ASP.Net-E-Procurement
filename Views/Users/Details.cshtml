@@ -1,0 +1,68 @@
+﻿@using Balimoon_E_Procurement.Models
+@model Balimoon_E_Procurement.Models.UserRoleVM
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content">
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8 bg-light">
+            <center>
+                <h2>Details</h2>
+            </center>
+            <div class="card-header">
+                <h4 class="card-title">Users Details</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.usertbl.UserName)
+                    </dt>
+                    <dd class="col-sm-9">
+                        <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.usertbl.UserName)" />
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.usertbl.Email)
+                    </dt>
+                    <dd class="col-sm-9">
+                        <input type="email" class="form-control text-info" disabled value=" @Html.DisplayFor(model => model.usertbl.Email)" />
+                    </dd>
+                    <dt class="col-sm-3">
+                        Role Code
+                    </dt>
+                    <dd class="col-sm-9">
+                        <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.roletbl.Name)" />
+                    </dd>
+                    <dt class="col-sm-3">
+                        Role Name
+                    </dt>
+                    <dd class="col-sm-9">
+                        <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.roletbl.NormalizedName)" />
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.usertbl.PhoneNumber)
+                    </dt>
+                    <dd class="col-sm-9">
+                        <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.usertbl.PhoneNumber)" />
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.usertbl.LockoutEnd)
+                    </dt>
+                    <dd class="col-sm-9">
+                        <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.usertbl.LockoutEnd)" />
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.usertbl.AccessFailedCount)
+                    </dt>
+                    <dd class="col-sm-9">
+                        <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.usertbl.AccessFailedCount)" />
+                    </dd>
+                </dl>
+                <a asp-action="Index" class="btn btn-info text-bold pull-right">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Debug\netcoreapp2.2\Balimoon E-Procurement.deps.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Debug\netcoreapp2.2\Balimoon E-Procurement.runtimeconfig.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Debug\netcoreapp2.2\Balimoon E-Procurement.runtimeconfig.dev.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Debug\netcoreapp2.2\Balimoon E-Procurement.dll
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Debug\netcoreapp2.2\Balimoon E-Procurement.pdb
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Debug\netcoreapp2.2\Balimoon E-Procurement.Views.dll
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Debug\netcoreapp2.2\Balimoon E-Procurement.Views.pdb
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.csprojAssemblyReference.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.csproj.CoreCompileInputs.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.RazorAssemblyInfo.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.RazorAssemblyInfo.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.AssemblyInfoInputs.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.AssemblyInfo.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.TagHelpers.input.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.TagHelpers.output.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.RazorCoreGenerate.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Layout.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.RazorTargetAssemblyInfo.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.RazorTargetAssemblyInfo.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.Views.pdb
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.dll
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.pdb
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Balimoon E-Procurement.csproj.CopyComplete
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\AccessDenied.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Login.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Logout.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Register.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\_ViewImports.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Index.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_Layout.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\ChangePassword.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\DeletePersonalData.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\DownloadPersonalData.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Users\Create.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Users\Delete.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Users\Details.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Users\Edit.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Users\Index.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ConfirmEmail.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ResetPassword.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ForgotPassword.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ForgotPasswordConfirmation.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ResetPasswordConfirmation.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Users\Waiting.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Users\Userrole.g.cshtml.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Debug\netcoreapp2.2\Razor\Views\Users\Userroleform.g.cshtml.cs

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Balimoon_E_Procurement.Models.AspNetUsers>
+@{
+    ViewData["Title"] = "Waiting";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-header">
+                    <h3 class="card-title">User Waiting to Confirm</h3>
+                </div>
+                <div class="card-body">
+                    <table id="tabel1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>E-Mail</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach(var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem =>item.UserName)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

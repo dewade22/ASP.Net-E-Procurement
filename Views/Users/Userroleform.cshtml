@@ -1,0 +1,57 @@
+﻿@using Balimoon_E_Procurement.Models
+@model Balimoon_E_Procurement.Models.UserRoleVM
+@{
+    ViewData["Title"] = "Userroleform";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br /><h2>Manage Role User</h2><br />
+<section class="content">
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8" style="background-color:white;">
+            <div class="card-header">
+                <h4 class="card-title">Update Role User</h4>
+            </div>
+            <div class="card-body">
+                <form id="Add-Role" method="post">
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            User Id
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input asp-for="usertbl.Id" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.usertbl.Id)" />
+                        </dd>
+                        <dt class="col-sm-3">
+                            Username
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.usertbl.UserName)" />
+                        </dd>
+                        <dt class="col-sm-3">
+                            E-Mail
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.usertbl.Email)" />
+                        </dd>
+                        <dt class="col-sm-3">
+                            Phone Number
+                        </dt>
+                        <dd class="col-sm-9">
+                            <input type="text" class="form-control text-info" disabled value="@Html.DisplayFor(model => model.usertbl.PhoneNumber)" />
+                        </dd>
+                        <dt class="col-sm-3">
+                            Role User
+                        </dt>
+                        <dd class="col-sm-9">
+                            <select asp-for="roletbl.Id" class="form-control" asp-items="@(new SelectList(ViewBag.ListOfRoles,"Id", "Name"))"></select>
+                        </dd>
+                    </dl>
+                    <button type="submit" class="btn btn-success text-bold pull-right">Save</button>
+                </form>
+                <a asp-action="Userrole" class="btn btn-danger text-bold">Back To List</a>
+            </div>
+        </div>
+    </div>
+</section>
+

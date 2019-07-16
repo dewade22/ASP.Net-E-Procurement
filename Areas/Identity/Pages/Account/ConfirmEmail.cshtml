@@ -1,0 +1,25 @@
+﻿@page
+@model ConfirmEmailModel
+@{
+    ViewData["Title"] = "Email Confirmation Message";
+}
+
+<div class="row" margin="20px" padding="15px">
+    <div class="col-md-1"></div>
+    <div class="col-md-10" padding-top="50px">
+        <section>
+            <form id="account">
+                <center>
+                    <h1>@ViewData["Title"]</h1>
+                </center>
+                <hr />
+                <div class="form-group">
+                    <h4>Terimakasih telah melakukan konfirmasi E-mail.</h4>
+                    <p>Akun anda akan segera diberikan akses kedalam sistem.<br />
+                    Apabila anda seorang vendor, silahkan lengkapi terlebih dahulu form vendor yang ada disamping kiri halaman.</p>
+                </div>
+            </form>
+        </section>
+        
+    </div>
+</div>

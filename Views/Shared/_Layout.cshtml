@@ -1,0 +1,939 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewData["Title"] - Balimoon_E_Procurement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+    <meta name="description" content="This is an example dashboard created using build-in elements and components.">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="~/lib/main.css" rel="stylesheet" />
+
+
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/Adminlte/plugins/datatables/dataTables.bootstrap4.min.css" />
+    <link rel="stylesheet" href="~/lib/Adminlte/dist/css/adminlte.min.css" />
+</head>
+<body>
+
+    <!--Header-->
+    <!--Default Class Fixed-Header Fixed-Sidebar-->
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar fixed-footer">
+            <div class="app-header header-shadow">
+                <div class="app-header__logo">
+                    <div class="logo-src"></div>
+                    <div class="header__pane ml-auto">
+                        <div>
+                            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-header__mobile-menu">
+                    <div>
+                        <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="app-header__menu">
+                    <span>
+                        <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                            <span class="btn-icon-wrapper">
+                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+
+                <div class="app-header__content">
+                    <div class="app-header-left">
+                        <ul class="header-menu nav">
+                            <!--Untuk Header Menu-->
+                            <!--Akhir Header Menu-->
+
+                        </ul>
+                    </div>
+                    <!--Header Right-->
+                    <div class="app-header-right">
+                        <ul class="header-menu nav">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><h5>Hello @User.Identity.Name!</h5></a>
+                                </li>
+
+                                <li class="nav-item">
+
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button type="submit" class="nav-link btn btn-link mobile-toggle-nav">
+                                            <h5>Logout</h5>
+                                        </button>
+                                    </form>
+
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Register"><h5>Register</h5></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Login"><h5>Login</h5></a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <!--AkhirHeader Right-->
+                </div>
+            </div>
+            <div class="ui-theme-settings">
+                <button type="button" id="TooltipDemo" class="btn-open-options btn btn-warning">
+                    <i class="fa fa-cog fa-w-16 fa-spin fa-2x"></i>
+                </button>
+                <div class="theme-settings__inner">
+                    <div class="scrollbar-container">
+                        <div class="theme-settings__options-wrapper">
+                            <h3 class="themeoptions-heading">
+                                Layout Options
+                            </h3>
+                            <div class="p-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <div class="switch has-switch switch-container-class" data-class="fixed-header">
+                                                        <div class="switch-animate switch-on">
+                                                            <input type="checkbox" checked data-toggle="toggle" data-onstyle="success">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">
+                                                        Fixed Header
+                                                    </div>
+                                                    <div class="widget-subheading">
+                                                        Makes the header top fixed, always visible!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <div class="switch has-switch switch-container-class" data-class="fixed-sidebar">
+                                                        <div class="switch-animate switch-on">
+                                                            <input type="checkbox" checked data-toggle="toggle" data-onstyle="success">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">
+                                                        Fixed Sidebar
+                                                    </div>
+                                                    <div class="widget-subheading">
+                                                        Makes the sidebar left fixed, always visible!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <div class="switch has-switch switch-container-class" data-class="fixed-footer">
+                                                        <div class="switch-animate switch-on">
+                                                            <input type="checkbox" data-toggle="toggle" data-onstyle="success">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">
+                                                        Fixed Footer
+                                                    </div>
+                                                    <div class="widget-subheading">
+                                                        Makes the app footer bottom fixed, always visible!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h3 class="themeoptions-heading">
+                                <div>
+                                    Header Options
+                                </div>
+                                <button type="button" class="btn-pill btn-shadow btn-wide ml-auto btn btn-focus btn-sm switch-header-cs-class" data-class="bg-love-kiss header-text-light">
+                                    Restore Default
+                                </button>
+                            </h3>
+                            <div class="p-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <h5 class="pb-2">
+                                            Choose Color Scheme
+                                        </h5>
+                                        <div class="theme-settings-swatches">
+                                            <div class="swatch-holder bg-primary switch-header-cs-class" data-class="bg-primary header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-secondary switch-header-cs-class" data-class="bg-secondary header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-success switch-header-cs-class" data-class="bg-success header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-info switch-header-cs-class" data-class="bg-info header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-warning switch-header-cs-class" data-class="bg-warning header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-danger switch-header-cs-class" data-class="bg-danger header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-light switch-header-cs-class" data-class="bg-light header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-dark switch-header-cs-class" data-class="bg-dark header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-focus switch-header-cs-class" data-class="bg-focus header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-alternate switch-header-cs-class" data-class="bg-alternate header-text-light">
+                                            </div>
+                                            <div class="divider">
+                                            </div>
+                                            <div class="swatch-holder bg-vicious-stance switch-header-cs-class" data-class="bg-vicious-stance header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-midnight-bloom switch-header-cs-class" data-class="bg-midnight-bloom header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-night-sky switch-header-cs-class" data-class="bg-night-sky header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-slick-carbon switch-header-cs-class" data-class="bg-slick-carbon header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-asteroid switch-header-cs-class" data-class="bg-asteroid header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-royal switch-header-cs-class" data-class="bg-royal header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-warm-flame switch-header-cs-class" data-class="bg-warm-flame header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-night-fade switch-header-cs-class" data-class="bg-night-fade header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-sunny-morning switch-header-cs-class" data-class="bg-sunny-morning header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-tempting-azure switch-header-cs-class" data-class="bg-tempting-azure header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-amy-crisp switch-header-cs-class" data-class="bg-amy-crisp header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-heavy-rain switch-header-cs-class" data-class="bg-heavy-rain header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-mean-fruit switch-header-cs-class" data-class="bg-mean-fruit header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-malibu-beach switch-header-cs-class" data-class="bg-malibu-beach header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-deep-blue switch-header-cs-class" data-class="bg-deep-blue header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-ripe-malin switch-header-cs-class" data-class="bg-ripe-malin header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-arielle-smile switch-header-cs-class" data-class="bg-arielle-smile header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-plum-plate switch-header-cs-class" data-class="bg-plum-plate header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-fisher switch-header-cs-class" data-class="bg-happy-fisher header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-itmeo switch-header-cs-class" data-class="bg-happy-itmeo header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-mixed-hopes switch-header-cs-class" data-class="bg-mixed-hopes header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-strong-bliss switch-header-cs-class" data-class="bg-strong-bliss header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-grow-early switch-header-cs-class" data-class="bg-grow-early header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-love-kiss switch-header-cs-class" data-class="bg-love-kiss header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-premium-dark switch-header-cs-class" data-class="bg-premium-dark header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-green switch-header-cs-class" data-class="bg-happy-green header-text-light">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h3 class="themeoptions-heading">
+                                <div>Sidebar Options</div>
+                                <button type="button" class="btn-pill btn-shadow btn-wide ml-auto btn btn-focus btn-sm switch-sidebar-cs-class" data-class="bg-night-fade sidebar-text-dark">
+                                    Restore Default
+                                </button>
+                            </h3>
+                            <div class="p-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <h5 class="pb-2">
+                                            Choose Color Scheme
+                                        </h5>
+                                        <div class="theme-settings-swatches">
+                                            <div class="swatch-holder bg-primary switch-sidebar-cs-class" data-class="bg-primary sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-secondary switch-sidebar-cs-class" data-class="bg-secondary sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-success switch-sidebar-cs-class" data-class="bg-success sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-info switch-sidebar-cs-class" data-class="bg-info sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-warning switch-sidebar-cs-class" data-class="bg-warning sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-danger switch-sidebar-cs-class" data-class="bg-danger sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-light switch-sidebar-cs-class" data-class="bg-light sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-dark switch-sidebar-cs-class" data-class="bg-dark sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-focus switch-sidebar-cs-class" data-class="bg-focus sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-alternate switch-sidebar-cs-class" data-class="bg-alternate sidebar-text-light">
+                                            </div>
+                                            <div class="divider">
+                                            </div>
+                                            <div class="swatch-holder bg-vicious-stance switch-sidebar-cs-class" data-class="bg-vicious-stance sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-midnight-bloom switch-sidebar-cs-class" data-class="bg-midnight-bloom sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-night-sky switch-sidebar-cs-class" data-class="bg-night-sky sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-slick-carbon switch-sidebar-cs-class" data-class="bg-slick-carbon sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-asteroid switch-sidebar-cs-class" data-class="bg-asteroid sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-royal switch-sidebar-cs-class" data-class="bg-royal sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-warm-flame switch-sidebar-cs-class" data-class="bg-warm-flame sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-night-fade switch-sidebar-cs-class" data-class="bg-night-fade sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-sunny-morning switch-sidebar-cs-class" data-class="bg-sunny-morning sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-tempting-azure switch-sidebar-cs-class" data-class="bg-tempting-azure sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-amy-crisp switch-sidebar-cs-class" data-class="bg-amy-crisp sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-heavy-rain switch-sidebar-cs-class" data-class="bg-heavy-rain sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-mean-fruit switch-sidebar-cs-class" data-class="bg-mean-fruit sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-malibu-beach switch-sidebar-cs-class" data-class="bg-malibu-beach sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-deep-blue switch-sidebar-cs-class" data-class="bg-deep-blue sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-ripe-malin switch-sidebar-cs-class" data-class="bg-ripe-malin sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-arielle-smile switch-sidebar-cs-class" data-class="bg-arielle-smile sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-plum-plate switch-sidebar-cs-class" data-class="bg-plum-plate sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-fisher switch-sidebar-cs-class" data-class="bg-happy-fisher sidebar-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-itmeo switch-sidebar-cs-class" data-class="bg-happy-itmeo sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-mixed-hopes switch-sidebar-cs-class" data-class="bg-mixed-hopes sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-strong-bliss switch-sidebar-cs-class" data-class="bg-strong-bliss sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-grow-early switch-sidebar-cs-class" data-class="bg-grow-early sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-love-kiss switch-sidebar-cs-class" data-class="bg-love-kiss sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-premium-dark switch-sidebar-cs-class" data-class="bg-premium-dark sidebar-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-green switch-sidebar-cs-class" data-class="bg-happy-green sidebar-text-light">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h3 class="themeoptions-heading">
+                                <div>Main Content Options</div>
+                                <button type="button" class="btn-pill btn-shadow btn-wide ml-auto active btn btn-focus btn-sm">
+                                    Restore Default
+                                </button>
+                            </h3>
+                            <div class="p-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <h5 class="pb-2">
+                                            Page Section Tabs
+                                        </h5>
+                                        <div class="theme-settings-swatches">
+                                            <div role="group" class="mt-2 btn-group">
+                                                <button type="button" class="btn-wide btn-shadow btn-primary btn btn-secondary switch-theme-class" data-class="body-tabs-line">
+                                                    Line
+                                                </button>
+                                                <button type="button" class="btn-wide btn-shadow btn-primary active btn btn-secondary switch-theme-class" data-class="body-tabs-shadow">
+                                                    Shadow
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Akhir Header-->
+            <!-- Main Body-->
+            <div class="app-main">
+                <!--Awal dari Sidebar-->
+                @if (SignInManager.IsSignedIn(User))
+                {
+                <div class="app-sidebar sidebar-shadow">
+                    <div class="app-header__logo">
+                        <div class="logo-src"></div>
+                        <div class="header__pane ml-auto">
+                            <div>
+                                <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
+                                    <span class="hamburger-box">
+                                        <span class="hamburger-inner"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-header__mobile-menu">
+                        <div>
+                            <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="app-header__menu">
+                        <span>
+                            <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                                <span class="btn-icon-wrapper">
+                                    <i class="fa fa-ellipsis-v fa-w-6"></i>
+                                </span>
+                            </button>
+                        </span>
+                    </div>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+
+
+                                    <li class="app-sidebar__heading">Account</li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-settings"></i>
+                                            Setting
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="Identity" asp-page="/Account/Manage/Index">
+                                                    <i class="metismenu-icon"></i>
+                                                    Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword">
+                                                    <i class="metismenu-icon">
+                                                    </i>Change Password
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-users"></i>
+                                            Manage User
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="Users" asp-action="Index">
+                                                    <i class="metismenu-icon"></i>
+                                                    User Active
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="Users" asp-action="Waiting">
+                                                    <i class="metismenu-icon"></i>
+                                                    E-Mail Not Confirmed
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Users" asp-action="Userrole">
+                                                    <i class="metismenu-icon"></i>
+                                                    Manage User Role
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="app-sidebar__heading">Widgets</li>
+                                    <li>
+                                        <a href="dashboard-boxes.html">
+                                            <i class="metismenu-icon pe-7s-display2"></i>
+                                            Dashboard Boxes
+                                        </a>
+                                    </li>
+                                    <li class="app-sidebar__heading">Forms</li>
+                                    <li>
+                                        <a href="forms-controls.html">
+                                            <i class="metismenu-icon pe-7s-mouse">
+                                            </i>Forms Controls
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="forms-layouts.html">
+                                            <i class="metismenu-icon pe-7s-eyedropper">
+                                            </i>Forms Layouts
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="forms-validation.html">
+                                            <i class="metismenu-icon pe-7s-pendrive">
+                                            </i>Forms Validation
+                                        </a>
+                                    </li>
+                                    <li class="app-sidebar__heading">Charts</li>
+                                    <li>
+                                        <a href="charts-chartjs.html">
+                                            <i class="metismenu-icon pe-7s-graph2">
+                                            </i>ChartJS
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+                }
+                else
+                {
+
+                }
+                <!--Akhir SideBar-->
+                <!--Awal Main Body-->
+                <div class="app-main__outer">
+                    <div class="col-xl-12">
+                            @RenderBody()
+                    </div>
+
+                    <!-- Awal Footer-->
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 1
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 2
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="app-footer-right">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 3
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <div class="badge badge-success mr-1 ml-0">
+                                                    <small>NEW</small>
+                                                </div>
+                                                Footer Link 4
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Akhir Footer-->
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="app-container  body-tabs-shadow fixed-header">
+            <div class="app-header header-shadow" data-class="">
+                <div class="app-header__logo">
+                    <div class="logo-src"></div>
+                    <div class="header__pane ml-auto">
+                        <div>
+                            <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar ">
+                                <span class="hamburger-box">
+                                    <span class="hamburger-inner"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="app-header__mobile-menu">
+                    <div>
+                        <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <div class="app-header__menu">
+                    <span>
+                        <button type="button" class="btn-icon btn-icon-only btn btn-primary btn-sm mobile-toggle-header-nav">
+                            <span class="btn-icon-wrapper">
+                                <i class="fa fa-ellipsis-v fa-w-6"></i>
+                            </span>
+                        </button>
+                    </span>
+                </div>
+
+                <div class="app-header__content" >
+                    <div class="app-header-left">
+                        <ul class="header-menu nav">
+                            <!--Untuk Header Menu-->
+                            <!--Akhir Header Menu-->
+
+                        </ul>
+                    </div>
+                    <!--Header Right-->
+                    <div class="app-header-right ">
+                        <ul class="header-menu nav">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><h5>Hello @User.Identity.Name!</h5></a>
+                                </li>
+
+                                <li class="nav-item">
+
+                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button type="submit" class="nav-link btn btn-link mobile-toggle-nav">
+                                            <h5>Logout</h5>
+                                        </button>
+                                    </form>
+
+                                </li>
+
+                            }
+                            else
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Register"><h5>Register</h5></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Login"><h5>Login</h5></a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                    <!--AkhirHeader Right-->
+                </div>
+            </div>
+            <div class="ui-theme-settings">
+                <button type="button" id="TooltipDemo" class="btn-open-options btn btn-warning">
+                    <i class="fa fa-cog fa-w-16 fa-spin fa-2x"></i>
+                </button>
+                <div class="theme-settings__inner">
+                    <div class="scrollbar-container">
+                        <div class="theme-settings__options-wrapper">
+                            <h3 class="themeoptions-heading">
+                                Layout Options
+                            </h3>
+                            <div class="p-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <div class="switch has-switch switch-container-class" data-class="fixed-header">
+                                                        <div class="switch-animate switch-on">
+                                                            <input type="checkbox" checked data-toggle="toggle" data-onstyle="success">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">
+                                                        Fixed Header
+                                                    </div>
+                                                    <div class="widget-subheading">
+                                                        Makes the header top fixed, always visible!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+                                    <li class="list-group-item">
+                                        <div class="widget-content p-0">
+                                            <div class="widget-content-wrapper">
+                                                <div class="widget-content-left mr-3">
+                                                    <div class="switch has-switch switch-container-class" data-class="fixed-footer">
+                                                        <div class="switch-animate switch-on">
+                                                            <input type="checkbox" data-toggle="toggle" data-onstyle="success">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="widget-content-left">
+                                                    <div class="widget-heading">
+                                                        Fixed Footer
+                                                    </div>
+                                                    <div class="widget-subheading">
+                                                        Makes the app footer bottom fixed, always visible!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <h3 class="themeoptions-heading">
+                                <div>
+                                    Header Options
+                                </div>
+                                <button type="button" class="btn-pill btn-shadow btn-wide ml-auto btn btn-focus btn-sm switch-header-cs-class" data-class="">
+                                    Restore Default
+                                </button>
+                            </h3>
+                            <div class="p-3">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <h5 class="pb-2">
+                                            Choose Color Scheme
+                                        </h5>
+                                        <div class="theme-settings-swatches">
+                                            <div class="swatch-holder bg-primary switch-header-cs-class" data-class="bg-primary header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-secondary switch-header-cs-class" data-class="bg-secondary header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-success switch-header-cs-class" data-class="bg-success header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-info switch-header-cs-class" data-class="bg-info header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-warning switch-header-cs-class" data-class="bg-warning header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-danger switch-header-cs-class" data-class="bg-danger header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-light switch-header-cs-class" data-class="bg-light header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-dark switch-header-cs-class" data-class="bg-dark header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-focus switch-header-cs-class" data-class="bg-focus header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-alternate switch-header-cs-class" data-class="bg-alternate header-text-light">
+                                            </div>
+                                            <div class="divider">
+                                            </div>
+                                            <div class="swatch-holder bg-vicious-stance switch-header-cs-class" data-class="bg-vicious-stance header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-midnight-bloom switch-header-cs-class" data-class="bg-midnight-bloom header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-night-sky switch-header-cs-class" data-class="bg-night-sky header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-slick-carbon switch-header-cs-class" data-class="bg-slick-carbon header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-asteroid switch-header-cs-class" data-class="bg-asteroid header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-royal switch-header-cs-class" data-class="bg-royal header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-warm-flame switch-header-cs-class" data-class="bg-warm-flame header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-night-fade switch-header-cs-class" data-class="bg-night-fade header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-sunny-morning switch-header-cs-class" data-class="bg-sunny-morning header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-tempting-azure switch-header-cs-class" data-class="bg-tempting-azure header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-amy-crisp switch-header-cs-class" data-class="bg-amy-crisp header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-heavy-rain switch-header-cs-class" data-class="bg-heavy-rain header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-mean-fruit switch-header-cs-class" data-class="bg-mean-fruit header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-malibu-beach switch-header-cs-class" data-class="bg-malibu-beach header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-deep-blue switch-header-cs-class" data-class="bg-deep-blue header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-ripe-malin switch-header-cs-class" data-class="bg-ripe-malin header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-arielle-smile switch-header-cs-class" data-class="bg-arielle-smile header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-plum-plate switch-header-cs-class" data-class="bg-plum-plate header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-fisher switch-header-cs-class" data-class="bg-happy-fisher header-text-dark">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-itmeo switch-header-cs-class" data-class="bg-happy-itmeo header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-mixed-hopes switch-header-cs-class" data-class="bg-mixed-hopes header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-strong-bliss switch-header-cs-class" data-class="bg-strong-bliss header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-grow-early switch-header-cs-class" data-class="bg-grow-early header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-love-kiss switch-header-cs-class" data-class="bg-love-kiss header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-premium-dark switch-header-cs-class" data-class="bg-premium-dark header-text-light">
+                                            </div>
+                                            <div class="swatch-holder bg-happy-green switch-header-cs-class" data-class="bg-happy-green header-text-light">
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Akhir Header-->
+            <!-- Main Body-->
+            <div class="app-main">
+                <!--Awal Main Body-->
+                <div class="app-main__outer">
+                    <div class="col-xl-12">
+                        <div>
+                            @RenderBody()
+                        </div>
+                    </div>
+
+                    <!-- Awal Footer-->
+                    <div class="app-wrapper-footer">
+                        <div class="app-footer">
+                            <div class="app-footer__inner">
+                                <div class="app-footer-left">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 1
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 2
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="app-footer-right">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                Footer Link 3
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="javascript:void(0);" class="nav-link">
+                                                <div class="badge badge-success mr-1 ml-0">
+                                                    <small>NEW</small>
+                                                </div>
+                                                Footer Link 4
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Akhir Footer-->
+                </div>
+            </div>
+        </div>
+
+    }
+    <!--Akhir Main Body-->
+    </div>
+    <!--Untuk Java Script-->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/assets/scripts/main.js"></script>
+    <script type="text/javascript" src="~/lib/Adminlte/plugins/jquery/jquery.min.js"></script>
+    <script src="~/lib/Adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="~/lib/Adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/lib/Adminlte/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="~/lib/Adminlte/dist/js/adminlte.min.js"></script>
+    <script type="text/javascript" src="~/lib/Adminlte/dist/js/demo.js"></script>
+
+    <script>
+        $(function () {
+            $("#tabel1").DataTable();
+            $("#tabel2").DataTable();
+            $("#tabel3").DataTable();
+        });
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
