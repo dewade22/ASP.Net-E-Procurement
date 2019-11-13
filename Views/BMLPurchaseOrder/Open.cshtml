@@ -1,0 +1,351 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.BMLPurchaseOrderVM
+@{
+    ViewData["Title"] = "Open";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2>Balim00n Liqueurs</h2>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h3 class="card-title">Purchase Order - OPEN</h3>
+                </div>
+                <div class="card-body">
+                    <table id="tabel5" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>PO ID</th>
+                                <th>PO Number</th>
+                                <th>Item Description</th>
+                                <th>Vendor</th>
+                                <th>Order Date</th>
+                                <th>Expected Received Date</th>
+                                <th>Amount</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+        $.fn.dataTable.moment("DD/MM/YYYY");
+        //datatable pada index
+        $("#tabel5").DataTable({
+            //Design Layout
+            stateSave: true,
+            autoWidth: true,
+
+            //ServerSide
+            processing: true,
+            serverSide: true,
+
+            //Paging Setup
+            paging: true,
+
+            //searching Setup
+            searching: { regex: true },
+
+            //ajax Filter
+            ajax: {
+                url: "/BMLPurchaseOrder/GetBMLPOListOpen",
+                //"dataSrc": '',
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+
+            //column definition
+            columnDefs: [
+                { targets: "no-sort", orderable: false },
+                { targets: "no-search", searchable: false },
+                {
+                    targets: "trim",
+                    render: function (data, type, full, meta) {
+                        if (type === "display") {
+                            data = strtrunc(data, 10);
+                        }
+                        return data;
+                    }
+                },
+                { targets: "data-type", type: "date-eu" }
+            ],
+
+            columns: [
+                { data: "PurchaseHeaderId", isIdentity: true, visible: false, searchable: false },
+                { data: "No" },
+                { data: "Description" },
+                { data: "BuyfromVendorName" },
+                {
+                    data: "OrderDate", render: function (data, type, row) {
+                        if (type === "display" || type === "filter") {
+                            return moment(data).format("dddd, DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
+                {
+                    data: "ExpectedReceiptDate", render: function (data, type) {
+                        if (type === "display" || type === "filter") {
+                            return moment(data).format("dddd, DD-MM-YYYY");
+                        }
+                        return data;
+                    }
+                },
+                { data: "Amount", render: $.fn.dataTable.render.number(',', '.', 2) },
+                {
+                    render: function (data, type, full, meta) {
+                        return "<a href='#' onclick='POOpenDetails(\"" + full.PurchaseHeaderId + "\")' class='btn btn-outline-info'><span class='pe-7s-info'> Details</span></a>";
+                    }
+                }
+
+            ]
+        })
+        $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+        $(".table ").css({ "width": "100%" });
+
+        //show detail PR to PopUp Modal Dialog
+        function POOpenDetails(PurchaseHeaderId) {
+            var url = "/BMLPurchaseOrder/GetPO?PurchaseHeaderId=" + PurchaseHeaderId;
+            $("#exampleModalLongTitle").html("PO Open");
+            $("#MyLargeModal").modal();
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#PurchaseHeaderId").val(obj.PurchaseHeaderId);
+                    $("#DocumentNo").val(obj.DocumentNo);
+                    $("#CreatedBy").val(obj.CreatedBy);
+                    $("#DimensionValue").val(obj.DimensionValue);
+                    $("#OrderDate").val(obj.OrderDate);
+                    $("#ExpectedReceiptDate").val(obj.ExpectedReceiptDate);
+                    $("#VendorName").val(obj.VendorName);
+                    $("#Amount").val(obj.Amount);
+                    $("#AmountIncludingVAT").val(obj.AmountIncludingVAT);
+                }
+            })
+            //Get PO Line
+            $("#tabel6").DataTable({
+            //Design Layout
+                stateSave: true,
+                autoWidth: true,
+                
+
+            //ServerSide
+                processing: true,
+                serverSide: true,
+
+            //Paging Setup
+                paging: true,
+
+            //searching Setup
+                searching: { regex: true },
+
+            //ajax Filter
+                ajax: {
+                    url: "/BMLPurchaseOrder/GetPODetails?PurchaseHeaderId=" +PurchaseHeaderId,
+                    //"dataSrc": '',
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+
+            //column definition
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+                            return data;
+                        }
+                    },
+                    { targets: "data-type", type: "date-eu" }
+                ],
+
+                columns: [
+                    { data: "PurchaseLineId", isIdentity: true, searchable: false, visible: false },
+                    { data: "Description" },
+                    { data: "VendorName" },
+                    { data: "Quantity" },
+                    { data: "QuantityReceive" },
+                    { data: "Currency" },
+                    { data: "Amount", render: $.fn.dataTable.render.number(',', '.', 2)},
+                    { data: "AmountVAT", render: $.fn.dataTable.render.number(',', '.', 2)}
+                ],
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api(), data;
+                    var numFormat = $.fn.dataTable.render.number( '\,', '.', 2 ).display;
+                    //Get Integer Data
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+                    //Sum All Pages
+                   
+                    totalQty = api
+                        .column(3)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                   
+                    total = api
+                        .column(6)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                     totalVAT = api
+                        .column(7)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    // Update footer 1
+                    $(api.column(3).footer()).html(
+                        numFormat(totalQty)
+                    );
+                   
+                     $(api.column(6).footer()).html(
+                        numFormat(total)
+                    );
+                    $( api.column(7).footer() ).html(
+                        numFormat(totalVAT)
+                    );
+                }
+            })
+            $(".dataTables_scrollHeadInner").css({"width":"100%"});
+            $(".table ").css({"width":"100%"});
+        }
+
+         //on close event 
+        $('#MyLargeModal').on('hidden.bs.modal', function () {
+        $('#tabel6').dataTable().fnDestroy();
+        $(this)
+            .find("input[type=text],input[type=email],textarea,select")
+            .val('')
+            .end()
+            .find("input[type=checkbox], input[type=radio]")
+            .prop("checked", "")
+            .end();
+        })
+    </script>
+}
+
+@section Styles{
+    <div class="modal fade bd-example-modal-lg" id="MyLargeModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle"></h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form">
+                        <fieldset id="SubmitForm">
+                            @Html.HiddenFor(a => a.purchasesHeader.PurchaseHeaderId, new { @id = "PurchaseHeaderId" })
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>PO Number</label>
+                                    @Html.TextBoxFor(a => a.purchasesLine.DocumentNo, new { @id = "DocumentNo", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>PR Number</label>
+                                    @Html.TextBoxFor(a => a.purchasesLine.RefPrno, new { @id = "RefPrno", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>PO Created by</label>
+                                    @Html.TextBoxFor(a => a.purchasesHeader.CreatedBy, new { @id = "CreatedBy", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Location</label>
+                                    @Html.TextBoxFor(a => a.purchasesLine.ShortcutDimension1Code, new { @id = "DimensionValue", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Order Date</label>
+                                    @Html.TextBoxFor(a => a.purchasesHeader.OrderDate, new { @id = "OrderDate", @class = "form-control", @readonly = "readonly", @Type = "datetime-local" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Expected Receive Date</label>
+                                    @Html.TextBoxFor(a => a.purchasesHeader.ExpectedReceiptDate, new { @id = "ExpectedReceiptDate", @class = "form-control", @readonly = "readonly", @Type = "datetime-local" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Vendor Name</label>
+                                @Html.TextBoxFor(a => a.purchasesHeader.PaytoName, new { @id = "VendorName", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Amount</label>
+                                    @Html.TextBoxFor(a => a.purchasesHeader.Amount, new { @id = "Amount", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Amount Include VAT</label>
+                                    @Html.TextBoxFor(a => a.purchasesHeader.AmountIncludingVat, new { @id = "AmountIncludingVAT", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div><br /></div>
+                            <div class="form-group">
+                                <table id="tabel6" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>PurchaseLineId</th>
+                                            <th>Item Name</th>
+                                            <th>Vendor</th>
+                                            <th>Qty</th>
+                                            <th>Qty Receive</th>
+                                            <th>Currency</th>
+                                            <th>Amount</th>
+                                            <th>Amount Incl VAT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th colspan="2" style="text-align:right">Total:</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

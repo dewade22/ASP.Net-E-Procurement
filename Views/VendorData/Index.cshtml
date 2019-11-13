@@ -1,0 +1,187 @@
+﻿@model Balimoon_E_Procurement.Models.AspNetVendor
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<section class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Add or Update Vendor Data</h4>
+                </div>
+                <div class="card-body">
+                    <center><h1 class="warning text-danger">WARNING...!!</h1></center>
+                    <input type="text" value="@ViewBag.userId" id="userid" hidden/>
+                    <h5>This Page are used for add or update the vendor data. if you are not a vendor, don't fill this page. but if you are a vendor, continue to fill the data by clicking the button bellow</h5>
+                    <br /><br /><hr />
+                    <!--<a asp-area="" asp-controller="VendorData" asp-action="FormData" type="button" class="btn btn-block btn-primary" >Continue</a>-->
+                    <!--<button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#myModal">Continue</button>-->
+                    <a href="#" onclick="myModal(document.getElementById('userid').value)" class="btn btn-block btn-primary">Continue</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles{
+    <!-- modal -->
+
+    <div class="modal fade bd-example-modal-lg" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="judulmodal"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="myForm" method="post" enctype="multipart/form-data" asp-controller="VendorData" asp-action="PDFUpload">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <center><h5>Vendor Data</h5></center>
+                                <hr />
+                                <dl class="row">
+                                    <dt class="col-md-4">
+                                        Company Name
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input asp-for="CompanyName" required class="form-control" id="companyname" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Company Address
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input asp-for="Address" class="form-control" required id="companyaddress" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        MPWP No.
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input asp-for="NpwpNo" required class="form-control" id="npwpno" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        SIUP No.
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input asp-for="SiupNo" required class="form-control" id="siupno" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Contact Name
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input asp-for="ContactName" required class="form-control" id="contactname" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Contact E-Mail
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input type="email" asp-for="ContactEmail" id="contactemail" class="form-control" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Contact
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input type="number" required asp-for="Contact" class="form-control" id="contactnum" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Invoice to Name
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input asp-for="InvoiceName" class="form-control" id="invoicetoname" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Invoice to Contact
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input type="number" asp-for="InvoiceContact" class="form-control" id="invoicetonum" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Invoice to E-Mail
+                                    </dt>
+                                    <dd class=" col-md-8">
+                                        <input type="email" asp-for="InvoiceEmail" class="form-control" id="InvoiceEmail" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Swift Code <span class="text-danger">**</span>
+                                    </dt>
+                                    <dd class="col-md-8">
+                                        <input type="number" asp-for="swiftcode" class="form-control" id="swift-code" />
+                                    </dd>
+                                    <dt class="col-md-4" id="currentjudul">
+                                        <span class="text-danger">Current File</span>
+                                    </dt>
+                                    <dd class="col-md-8" id="currenttab">
+                                        <input type="text" id="current" disabled class="form-control text-danger" />
+                                    </dd>
+                                    <dt class="col-md-4">
+                                        Company <br />NPWP & SIUP<br /> (.Pdf) 20MB Max<br />
+                                    </dt>
+                                    <dd class="col-md-8">
+                                        <input type="file" name="file" class="btn" id="file-location" />
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <input type="submit" class="btn btn-primary pull-right" value="Upload Data" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@section Scripts{
+<script>
+    $(document).ready(function () {
+        $("#currentjudul").hide();
+        $("#currenttab").hide();
+    })
+</script>
+    <script>
+        $('#myModal').on('hidden.bs.modal', function() {
+        $(this)
+            .find("input[type=text],input[type=email],textarea,select")
+            .val('')
+            .end()
+            .find("input[type=checkbox], input[type=radio]")
+            .prop("checked", "")
+            .end();
+        })
+    </script>
+<script>
+    function myModal(id) {
+        var link = "/VendorData/ViewinModal?id=" + id;
+        $("#myModal").modal();
+        $("#judulmodal").html("Add Or Update Vendor Data")
+        $.ajax({
+            type: "GET",
+            url: link,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $("#companyname").val(obj.CompanyName);
+                $("#companyaddress").val(obj.Address);
+                $("#npwpno").val(obj.NpwpNo);
+                $("#siupno").val(obj.SiupNo);
+                $("#contactname").val(obj.ContactName);
+                $("#contactemail").val(obj.ContactEmail);
+                $("#contactnum").val(obj.Contact);
+                $("#invoicetoname").val(obj.InvoiceName);
+                $("#invoicetonum").val(obj.InvoiceContact);
+                $("#InvoiceEmail").val(obj.InvoiceEmail);
+                $("#current").val(obj.FileLocation);
+                $("#swift-code").val(obj.swiftcode);
+                if (obj.FileLocation != null) {
+                    $("#currentjudul").show();
+                    $("#currenttab").show();
+                }
+            }
+        })
+    }
+</script>
+}

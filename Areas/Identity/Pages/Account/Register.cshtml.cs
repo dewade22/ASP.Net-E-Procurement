@@ -108,14 +108,14 @@ namespace Balimoon_E_Procurement.Areas.Identity.Pages.Account
                         $"<br>" +
                         $"Thanks for signing up<br>" +
                         $"Your account has been created,<br>" +
-                        $"You can login with the following credentials after you have activated your account by pressing the url below.<br>" +
+                        $"You can login with the following credentials after you have activated your account by pressing the link below.<br>" +
                         $"-------------------------------<br>" +
-                        $"User Name = " +user.UserName+ " < br > " +
+                        $"User Name = " +user.UserName+ " <br> " +
                         $"E-Mail = " + user.Email + "<br> " +
                         $"Password = " + Input.Password + " <br>" +
                         $"-------------------------------<br>" +
                         $"Please click this link to activate your account:<br>" +
-                        $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Klik Disini</a>.");
+                        $"<a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Click Here</a>.");
 
                     await _signInManager.SignInAsync(user, isPersistent: false);
                    return LocalRedirect(returnUrl);

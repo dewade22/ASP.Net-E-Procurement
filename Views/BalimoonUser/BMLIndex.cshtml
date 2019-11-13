@@ -1,0 +1,227 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.BMLUserVM
+@{
+    ViewData["Title"] = "BMLIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2>Add Detail User PT Balimoon</h2>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        List of User PT Balimoon
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <table id="tabel5" class="table table-primary">
+                            <thead>
+                                <tr>
+                                    <th>UserId</th>
+                                    <th>Username</th>
+                                    <th>Role Access</th>
+                                    <th>Departement</th>
+                                    <th>Location</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="SetUserList"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+<script>
+    //Get User Data To Pass into Tabel
+    $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+    $.fn.dataTable.moment("DD/MM/YYYY");
+
+     $("#tabel5").DataTable({
+            //Design Layout
+            stateSave: true,
+            autoWidth: true,
+            scrollX: true,
+            
+
+            //ServerSide
+            processing: true,
+            serverSide: true,
+
+            //Paging Setup
+            paging: true,
+        
+
+            //searching Setup
+            searching: { regex: true },
+
+            //ajax Filter
+            ajax: {
+                url: "/BalimoonUser/GetBMLIndex",
+                //"dataSrc": '',
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+
+            //column definition
+         columnDefs: [
+                
+                { targets: "no-sort", orderable: false },
+                { targets: "no-search", searchable: false },
+                {
+                    targets: "trim",
+                    render: function (data, type, full, meta) {
+                        if (type === "display") {
+                            data = strtrunc(data, 10);
+                        }
+                        return data;
+                    }
+                },
+                { targets: "data-type", type: "date-eu" }
+            ],
+
+            columns: [
+                { data: "UserId", isIdentity: true, visible: false },
+                { data: "UserName" },
+                { data: "RoleName" },
+                { data: "Departement" },
+                { data: "Locations" },
+                {
+                    render: function (data, type, full, meta) {
+                        return "<a href='#' onclick='AddUserDetail(\"" + full.UserId + "\")' class='btn btn-block btn-outline-primary'><span class='pe-7s-note'> Add Details</span></a>";
+
+                    }
+                }
+            ]
+     })
+     $(".dataTables_scrollHeadInner").css({"width":"100%"});
+     $(".table ").css({"width":"100%"});
+
+     //Show Pop Up Modal For Detail Form
+    function AddUserDetail(UserId) {
+        var url = "/BalimoonUser/GetBMLDetail?UserId=" + UserId;
+        $("#ModalTitle").html("Add Details User");
+        $("#MyLargeModal").modal();
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $("#UserId").val(obj.UserId);
+                $("#UserName").val(obj.UserName);
+                $("#RoleAccess").val(obj.RoleAccess);
+                $("#DepartementCode").val(obj.DepartementCode);
+                $("#DepartementCode").trigger("chosen:updated");
+                $("#LocationCode").val(obj.LocationCode);
+                $("#LocationCode").trigger("chosen:updated");
+            }
+        })
+    }
+</script>
+<script>
+    $(function () {
+        $("#MyLargeModal form").validate({
+            rules: {
+                UserName: {
+                    required: true
+                }
+            },
+            submitHandler: function (form) {
+                var getUser = document.getElementById('UserName').value;
+                Swal.fire({
+                    title: 'Update Detil User',
+                    text: 'Are You Sure Want To Update '+getUser+' User?',
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#002afc',
+                    cancelButtonColor: '#fc0303',
+                    confirmButtonText: 'Update!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "/BalimoonUser/UpdateBMLUser",
+                            type: 'POST',
+                            data: $(form).serialize(),
+                            success: function (result) {
+                                if (result == true) {
+                                    Swal.fire(
+                                        'Saved!',
+                                        'Your file has been saved.',
+                                        'success'
+                                    ).then((result) => {
+                                        window.location.href = "/BalimoonUser/BMLIndex";
+                                        $("#MyLargeModal").modal("hide");
+                                    })
+                                }
+                                else {
+                                    Swal.fire({
+                                        type: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!, Check The Require Field Again'
+                                    })
+                                }
+                            }
+                        });
+                    }
+                })
+            }
+        })
+    })
+</script>
+<script>
+    $("#DepartementCode").chosen();
+    $("#LocationCode").chosen();
+    $('.chosen-container').css('width', '100%');
+</script>
+}
+
+
+@section Styles{ 
+    <div class="modal fade bd-example-modal-lg" id="MyLargeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="ModalTitle"></h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form" role="form">
+                        <fieldset id="SubmitForm">
+                            @Html.HiddenFor(a => a.aspNetSystemUsers.UserId, new { @id = "UserId" })
+                            <div class="form-group">
+                                <label>User Name</label>
+                                @Html.TextBoxFor(a => a.aspNetUsers.UserName, new { @id = "UserName", @class = "form-control", @readonly = "readonly", @required = "required" })
+                            </div>
+                            <div class="form-group">
+                                <label>Role Name</label>
+                                @Html.TextBoxFor(a => a.aspNetRoles.Name, new { @id = "RoleAccess", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div>
+                                <label>Department</label>
+                                @Html.DropDownListFor(a => a.aspNetSystemUsers.DepartmentCode, ViewBag.ListOfDimension as SelectList, "", new { @id = "DepartementCode", @class = "form-control", @required = "required" })
+                            </div>
+                            <div>
+                                <label>Location</label>
+                                @Html.DropDownListFor(a => a.aspNetSystemUsers.LocationCode, ViewBag.ListOfLocations as SelectList, "", new { @id = "LocationCode", @class = "form-control" })
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="btnSimpan"><span class="pe-7s-upload"></span> Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

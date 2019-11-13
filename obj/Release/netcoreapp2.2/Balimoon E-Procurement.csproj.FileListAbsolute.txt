@@ -1,0 +1,122 @@
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\Balimoon E-Procurement.deps.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\Balimoon E-Procurement.runtimeconfig.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\Balimoon E-Procurement.runtimeconfig.dev.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\Balimoon E-Procurement.dll
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\Balimoon E-Procurement.pdb
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\Balimoon E-Procurement.Views.dll
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\Balimoon E-Procurement.Views.pdb
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.csprojAssemblyReference.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.RazorAssemblyInfo.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.RazorAssemblyInfo.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.AssemblyInfoInputs.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.AssemblyInfo.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.TagHelpers.input.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.TagHelpers.output.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.RazorCoreGenerate.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.RazorTargetAssemblyInfo.cache
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.RazorTargetAssemblyInfo.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.Views.pdb
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.dll
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.pdb
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Balimoon E-Procurement.csproj.CopyComplete
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\appsettings.Development.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\appsettings.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\bin\Release\netcoreapp2.2\Properties\launchSettings.json
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\AccessDenied.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ConfirmEmail.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ForgotPassword.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Logout.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\Index.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_Layout.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ResetPassword.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BalimoonUser\AddApprovalBMI.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BalimoonUser\AddApprovalBML.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BalimoonUser\BMIIndex.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BalimoonUser\BMLIndex.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BalimoonUser\BudgetApprovalBMI.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BalimoonUser\BudgetApprovalBML.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMIPurchaseOrder\List.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMIPurchaseRequest\List.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\Archived.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\Closed.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\DetilPROK.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\ExpirePRR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\List.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\Open.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\PendingApproval.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\PendingPrePayment.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\PurchasingIndex.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\BMLPurchaseOrder\Release.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Home\Index.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Home\Privacy.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\AddPR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\ApprovePR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\Archived.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\Cancelled.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\Closed.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRArchived.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRClosed.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRCnclView.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRListView.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPROpenView.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRPAView.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRPostedView.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRPPPView.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRReleaseView.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\EditLineSubmit.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\List.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyCancelledPR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyClosedPR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyPendingAprPR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyPostedPR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyPROpen.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyRejectedPR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyReleasePR.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\Open.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\PendingApproval.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\PendingPrePayment.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\Posted.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\Rejected.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\Release.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\ShowEdit.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Shared\Error.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Shared\_Layout.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Users\Delete.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Users\Details.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Users\Index.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Users\ManageVendorData.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Users\Userrole.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Users\Userroleform.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Users\VendorData.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Users\Waiting.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\VendorData\Index.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\_ViewImports.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\_ViewStart.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyPROpenDetails.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyCancelledPRDetails.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\DetilPRRejectedView.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\InfoPRApprove.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyClosedPRDetails.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyPendingAprPRDetail.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyPostedPRDetails.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\MyReleasePRDetail.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\RecordList.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\ViewMyReject.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\PurchaseRequest\ViewMyRejectDetail.cshtml.g.cs
+D:\ASP.NET Program\03-07-2019\Balimoon E-Procurement\obj\Release\netcoreapp2.2\Razor\Views\Shared\NotFound.cshtml.g.cs

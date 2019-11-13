@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "My Cancelled PR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>BalimOOn Liqueurs - My Cancelled PR</h3>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">My Cancelled PR</h4>
+                </div>
+                <div class="card-body">
+                    <table id="tabel-6" class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>PR No.</th>
+                                <th>Order Date</th>
+                                <th>Due Date</th>
+                                <th>Notes</th>
+                                <th>Info</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+            $.fn.dataTable.moment("DD/MM/YYYY");
+            $("#tabel-6").DataTable({
+                //Design Layout
+                stateSave: true,
+                autoWidth: true,
+                scrollX: true,
+                searching: false,
+
+                //ServerSide
+                processing: true,
+                serverSide: true,
+
+                //Paging Setup
+                paging: true,
+
+                //searching Setup
+                searching: { regex: true },
+
+                //ajax Filter
+                ajax: {
+                    url: "/PurchaseRequest/CancelledTable",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+
+                //column definition
+                 columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+                            return data;
+                        }
+                    },
+                    { targets: "data-type", type: "date-eu" }
+                ],
+                 //columns to display
+                columns: [
+                    { data: "RequisitionID", isIdentity: true, visible: false },
+                    { data: "RequisitionNo" },
+                    {
+                        data: "OrderDate", render: function (data, type, row) {
+                            if (type === "display" || type === "filter") {
+                                return moment(data).format("ddd, MM/DD/YYYY");
+                            }
+                            return data;
+                        }
+
+                    },
+                    {
+                        data: "DueDate", render: function (data, type) {
+                            if (type === "display" || type === "filter") {
+                                return moment(data).format("ddd, MM/DD/YYYY")
+                            }
+                            return data;
+                        }
+                    },
+                    { data: "RequestNotes" },
+                    {
+                        render: function (data, type, full, meta) {
+                            return "<a href='#' onclick='View(\"" + full.RequisitionNo + "\")' class='btn btn-outline-info btn-block'><span class='fa fa-eye'> </span></a>";
+                        }
+                    }
+                ]
+            })
+             $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+            $(".table ").css({ "width": "100%" });
+        })
+    </script>
+<script>
+    function View(RequisitionNo) {
+        window.location.href = "/PurchaseRequest/ViewMyCancelledDetail?RequisitionNo=" + RequisitionNo;
+    }
+</script>
+}

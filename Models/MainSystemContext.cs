@@ -15,16 +15,15 @@ namespace Balimoon_E_Procurement.Models
         {
         }
 
-        public virtual DbSet<AspDepartement> AspDepartement { get; set; }
         public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetSystemUsers> AspNetSystemUsers { get; set; }
         public virtual DbSet<AspNetUserClaims> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogins> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
-        public virtual DbSet<AspNetUserUpload> AspNetUserUpload { get; set; }
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<AspUserDepartement> AspUserDepartement { get; set; }
+        public virtual DbSet<AspNetVendor> AspNetVendor { get; set; }
         public virtual DbSet<CompanyInformation> CompanyInformation { get; set; }
         public virtual DbSet<ExportImportTable> ExportImportTable { get; set; }
         public virtual DbSet<LookupField> LookupField { get; set; }
@@ -46,16 +45,7 @@ namespace Balimoon_E_Procurement.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
-
-            modelBuilder.Entity<AspDepartement>(entity =>
-            {
-                entity.HasKey(e => e.DepartemenId);
-
-                entity.Property(e => e.DepartemenId).HasColumnName("DepartemenID");
-
-                entity.Property(e => e.DepartemenName).HasMaxLength(450);
-            });
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
 
             modelBuilder.Entity<AspNetRoleClaims>(entity =>
             {
@@ -80,6 +70,29 @@ namespace Balimoon_E_Procurement.Models
                 entity.Property(e => e.Name).HasMaxLength(256);
 
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
+            });
+
+            modelBuilder.Entity<AspNetSystemUsers>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.Property(e => e.UserId)
+                    .HasColumnName("UserID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ApproverId)
+                    .HasColumnName("ApproverID")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.DepartmentCode)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.LocationCode)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Substitute).HasMaxLength(450);
             });
 
             modelBuilder.Entity<AspNetUserClaims>(entity =>
@@ -112,17 +125,21 @@ namespace Balimoon_E_Procurement.Models
 
             modelBuilder.Entity<AspNetUserRoles>(entity =>
             {
-                entity.HasKey(e => new { e.UserId });
+                entity.HasKey(e => e.UserId);
 
                 entity.HasIndex(e => e.RoleId);
+
+                entity.Property(e => e.UserId).ValueGeneratedNever();
+
+                entity.Property(e => e.RoleId).IsRequired();
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.AspNetUserRoles)
                     .HasForeignKey(d => d.RoleId);
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.AspNetUserRoles)
-                    .HasForeignKey(d => d.UserId);
+                    .WithOne(p => p.AspNetUserRoles)
+                    .HasForeignKey<AspNetUserRoles>(d => d.UserId);
             });
 
             modelBuilder.Entity<AspNetUserTokens>(entity =>
@@ -136,15 +153,6 @@ namespace Balimoon_E_Procurement.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.AspNetUserTokens)
                     .HasForeignKey(d => d.UserId);
-            });
-
-            modelBuilder.Entity<AspNetUserUpload>(entity =>
-            {
-                entity.Property(e => e.FilePath).HasMaxLength(450);
-
-                entity.Property(e => e.UserId)
-                    .HasColumnName("UserID")
-                    .HasMaxLength(450);
             });
 
             modelBuilder.Entity<AspNetUsers>(entity =>
@@ -165,16 +173,55 @@ namespace Balimoon_E_Procurement.Models
 
                 entity.Property(e => e.NormalizedUserName).HasMaxLength(256);
 
+                entity.Property(e => e.Picture).HasMaxLength(450);
+
                 entity.Property(e => e.UserName).HasMaxLength(256);
             });
 
-            modelBuilder.Entity<AspUserDepartement>(entity =>
+            modelBuilder.Entity<AspNetVendor>(entity =>
             {
-                entity.HasKey(e => e.UdId);
+                entity.Property(e => e.Address).HasMaxLength(450);
 
-                entity.Property(e => e.UdId).HasColumnName("UdID");
+                entity.Property(e => e.CompanyName)
+                    .IsRequired()
+                    .HasMaxLength(450);
 
-                entity.Property(e => e.UserId).HasMaxLength(450);
+                entity.Property(e => e.Contact).HasMaxLength(450);
+
+                entity.Property(e => e.ContactEmail).HasMaxLength(450);
+
+                entity.Property(e => e.ContactName).HasMaxLength(450);
+
+                entity.Property(e => e.FileLocation).HasMaxLength(450);
+
+                entity.Property(e => e.InvoiceContact).HasMaxLength(450);
+
+                entity.Property(e => e.InvoiceEmail).HasMaxLength(450);
+
+                entity.Property(e => e.InvoiceName).HasMaxLength(450);
+
+                entity.Property(e => e.NpwpNo)
+                    .IsRequired()
+                    .HasColumnName("NPWP_No")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.SiupNo)
+                    .IsRequired()
+                    .HasColumnName("SIUP_No")
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.SuplierType).HasMaxLength(450);
+
+                entity.Property(e => e.UserId)
+                    .IsRequired()
+                    .HasMaxLength(450);
+
+                entity.Property(e => e.swiftcode)
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.VendorNo)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<CompanyInformation>(entity =>

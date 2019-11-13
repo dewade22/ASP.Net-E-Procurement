@@ -1,8 +1,10 @@
-﻿@model IEnumerable<Balimoon_E_Procurement.Models.AspNetUsers>
+﻿@model Balimoon_E_Procurement.Models.AspNetUsers
 @{
     ViewData["Title"] = "Waiting";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
+<h2>User not Confirm Their Account</h2><br />
 <section class="content">
     <div class="card">
         <div class="row">
@@ -11,28 +13,88 @@
                     <h3 class="card-title">User Waiting to Confirm</h3>
                 </div>
                 <div class="card-body">
-                    <table id="tabel1" class="table table-bordered table-striped">
+                    <table id="tabel5" class="table table-bordered table-striped position-relative display nowrap" style="width:100%">
                         <thead>
                             <tr>
+                                <th>User ID</th>
                                 <th>Username</th>
                                 <th>E-Mail</th>
                                 <th>Phone Number</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach(var item in Model)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(modelItem =>item.UserName)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                    <td>@Html.DisplayFor(modelItem => item.PhoneNumber)</td>
-                                </tr>
-                            }
-                        </tbody>
+                        <tbody id="SetUserList"></tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+@section Scripts{
+    <script>
+        //Get User waiting to pass to data table
+
+    $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+    $.fn.dataTable.moment("DD/MM/YYYY");
+
+
+    $("#tabel5").DataTable({
+        //Design Layout
+        stateSave: true,
+        autoWidth: true,
+        scrollX: true,
+      
+
+        //ServerSide
+        processing: true,
+        serverSide: true,
+
+        //Paging Setup
+        paging: true,
+        
+
+        //searching Setup
+        searching: { regex: true },
+
+        //ajax Filter
+        ajax: {
+            url: "/Users/GetUserWaiting",
+            //"dataSrc": '',
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: function (d) {
+                return JSON.stringify(d);
+            }
+        },
+
+        //column definition
+        columnDefs: [
+            { targets: "no-sort", orderable: false },
+            { targets: "no-search", searchable: false },
+            {
+                targets: "trim",
+                render: function (data, type, full, meta) {
+                    if (type === "display") {
+                        data = strtrunc(data, 10);
+                    }
+                    return data;
+                }
+            },
+            { targets: "data-type", type: "date-eu" }
+        ],
+
+        columns: [
+             { data: "Id", name: "Id" },
+             { data: "UserName", name: "UserName" },
+             { data: "Email", name: "Email" },
+             { data: "PhoneNumber", name: "PhoneNumber" }
+        ]
+    })
+    $(".dataTables_scrollHeadInner").css({"width":"100%"});
+    $(".table ").css({"width":"100%"});
+
+    </script>
+}
 

@@ -14,7 +14,7 @@
         "outputPath": "D:\\ASP.NET Program\\03-07-2019\\Balimoon E-Procurement\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "D:\\Microsoft\\Xamarin\\NuGet\\",
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
@@ -43,6 +43,22 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "AsyncChromeDriver": {
+              "target": "Package",
+              "version": "[0.5.5, )"
+            },
+            "Fancybox": {
+              "target": "Package",
+              "version": "[2.1.5, )"
+            },
+            "HSTS": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "LazZiya.ImageResize": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
               "target": "Package",
@@ -62,18 +78,44 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[2.2.3, )"
+              "version": "[2.2.4, )"
+            },
+            "RandomGen": {
+              "target": "Package",
+              "version": "[1.0.0, )"
             },
             "Sendgrid": {
               "target": "Package",
-              "version": "[9.11.0, )"
+              "version": "[9.12.0, )"
+            },
+            "Syncfusion.EJ": {
+              "target": "Package",
+              "version": "[17.2.0.51, )"
+            },
+            "Syncfusion.EJ2.AspNet.Core": {
+              "target": "Package",
+              "version": "[17.2.0.51, )"
+            },
+            "System.Security.Cryptography.OpenSsl": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            },
+            "WebEssentials.AspNetCore.PWA": {
+              "target": "Package",
+              "version": "[1.0.59, )"
             }
           },
           "imports": [
-            "net461"
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
           ],
           "assetTargetFallback": true,
-          "warn": true
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

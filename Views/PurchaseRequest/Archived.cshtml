@@ -1,0 +1,128 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.PurchaseRequestVM
+@{
+    ViewData["Title"] = "Open";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2>BalimOOn Liqueurs</h2>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h3 class="card-title">Purchases Requisition - Archived</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <table id="tabel5" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>PR Id</th>
+                                    <th>Document No</th>
+                                    <th>Requester</th>
+                                    <th>Department</th>
+                                    <th>Order Date</th>
+                                    <th>Due Date</th>
+                                    <th>Notes</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+        $.fn.dataTable.moment("DD/MM/YYYY");
+
+
+        $("#tabel5").DataTable({
+            //Design Layout
+            stateSave: true,
+            autoWidth: true,
+
+            //ServerSide
+            processing: true,
+            serverSide: true,
+
+            //Paging Setup
+            paging: true,
+
+            //searching Setup
+            searching: { regex: true },
+
+            //ajax Filter
+            ajax: {
+                url: "/PurchaseRequest/GetPRListAcv",
+                //"dataSrc": '',
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+
+            //column definition
+            columnDefs: [
+                { targets: "no-sort", orderable: false },
+                { targets: "no-search", searchable: false },
+                {
+                    targets: "trim",
+                    render: function (data, type, full, meta) {
+                        if (type === "display") {
+                            data = strtrunc(data, 10);
+                        }
+                        return data;
+                    }
+                },
+                { targets: "data-type", type: "date-eu" }
+            ],
+
+            columns: [
+                { data: "RequisitionHeaderId", name: "RequisitionHeaderId", isIdentity: true, visible: false },
+                { data: "RequisitionNo", name: "RequisitionNo" },
+                { data: "RequesterId", name: "RequesterId" },
+                { data: "ShortcutDimension1Code", name: "ShortcutDimension1Code" },
+                {
+                    data: "OrderDate", render: function (data, type, row) {
+                        if (type === "display" || type === "filter") {
+                            return moment(data).format("dddd, DD-MM-YYYY HH:mm:ss");
+                        }
+                        return data;
+                    }
+                },
+                {
+                    data: "DueDate",
+                    render: function (data, type, row) {
+                        if (type === "display" || type === "filter") {
+                            return moment(data).format("dddd, DD-MM-YYYY HH:mm:ss");
+                        }
+                        return data;
+                    }
+                },
+                { data: "RequestNotes", name: "RequestNotes" },
+
+                {
+                    render: function (data, type, full, meta) {
+                        return "<a href='#' onclick='Details(\"" + full.RequisitionHeaderId + "\")' class='btn btn-outline-info'><span class='pe-7s-info'> Details</span></a>";
+
+                    }
+                }
+            ]
+        })
+        $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+        $(".table ").css({ "width": "100%" });
+    </script>
+<script>
+    function Details(RequisitionHeaderId) {
+        window.location.href = "/PurchaseRequest/DetilPRArchived?RequisitionHeaderId=" + RequisitionHeaderId;
+    }
+</script>
+}

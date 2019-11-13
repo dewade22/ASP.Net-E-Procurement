@@ -20,6 +20,8 @@ using Balimoon_E_Procurement.Models;
 using Newtonsoft.Json.Serialization;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Balimoon_E_Procurement.Services;
+using Balimoon_E_Procurement.Models.BalimoonBML;
+using Balimoon_E_Procurement.Models.BalimoonBMI;
 
 namespace Balimoon_E_Procurement
 {
@@ -49,6 +51,16 @@ namespace Balimoon_E_Procurement
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection"),
                     b => b.UseRowNumberForPaging()));
+            services.AddDbContext<BalimoonBMLContext>(options =>
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("DataConnection1"),
+                   b => b.UseRowNumberForPaging()));
+            services.AddDbContext<BalimoonBMIContext>(options =>
+               options.UseSqlServer(
+                   Configuration.GetConnectionString("DataConnection2"),
+                    b => b.UseRowNumberForPaging()));
+           
+
             services.AddDefaultIdentity<IdentityUser>(config=>
             {
                 config.SignIn.RequireConfirmedEmail = true;
@@ -74,6 +86,7 @@ namespace Balimoon_E_Procurement
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
             .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
             var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddProgressiveWebApp();
 
 
             services.Configure<IdentityOptions>(options =>
@@ -87,7 +100,7 @@ namespace Balimoon_E_Procurement
                 options.Password.RequiredUniqueChars = 0;
 
                 // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
 

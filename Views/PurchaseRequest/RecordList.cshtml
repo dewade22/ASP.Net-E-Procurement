@@ -1,0 +1,68 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.PurchaseRequestVM
+@{
+    ViewData["Title"] = "List of My PR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>BalimOOn Liqueurs</h3>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">List Of My PR</h4>
+                </div>
+                <div class="card-body">
+                    <table id="tabel-6" class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>PR NO</th>
+                                <th>Order Date</th>
+                                <th>Due Date</th>
+                                <th>Description</th>
+                                <th>Info</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{ 
+    <script>
+        $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+        $.fn.dataTable.moment("DD/MM/YYYY");
+        $("#tabel-6").DataTable({
+            //Design Layout
+            stateSave: true,
+            autoWidth: true,
+            scrollX: true,
+
+            //ServerSide
+            processing: true,
+            serverSide: true,
+
+            //Paging Setup
+            paging: true,
+
+            //searching Setup
+            searching: { regex: true },
+
+            //ajax Filter
+            ajax: {
+                url: "/PurchaseRequest/",
+                //"dataSrc": '',
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+        })
+    </script>
+}

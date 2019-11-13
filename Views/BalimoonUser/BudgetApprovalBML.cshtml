@@ -1,0 +1,217 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.BMLUserVM
+@{
+    ViewData["Title"] = "BudgetApprovalBML";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2>Add Budget Approval - Balimoon Liqueur</h2>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h3 class="card-title">List of User  - Balimoon Liqueur</h3>
+                </div>
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <table id="tabel5" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>User Id</th>
+                                        <th>User Name</th>
+                                        <th>Role</th>
+                                        <th>Department</th>
+                                        <th>Maksimum Budget</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+<script>
+      //Get User Data To Pass into Tabel
+    $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+    $.fn.dataTable.moment("DD/MM/YYYY");
+
+    $("#tabel5").DataTable({
+            //Design Layout
+            stateSave: true,
+            autoWidth: true,
+            
+
+            //ServerSide
+            processing: true,
+            serverSide: true,
+
+            //Paging Setup
+            paging: true,
+        
+            //searching Setup
+            searching: { regex: true },
+
+            //ajax Filter
+            ajax: {
+                url: "/BalimoonUser/AddBMLBudget",
+                //"dataSrc": '',
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+
+            //column definition
+         columnDefs: [
+                
+                { targets: "no-sort", orderable: false },
+                { targets: "no-search", searchable: false },
+                {
+                    targets: "trim",
+                    render: function (data, type, full, meta) {
+                        if (type === "display") {
+                            data = strtrunc(data, 10);
+                        }
+                        return data;
+                    }
+                },
+                { targets: "data-type", type: "date-eu" }
+            ],
+
+            columns: [
+                { data: "UserId", Name: "UserId", isIdentity: true, visible: false },
+                { data: "UserName" },
+                { data: "Role" },
+                { data: "Department" },
+                { data: "MaksimumBudget" },
+                {
+                    render: function (data, type, full, meta) {
+                        return "<a href='#' onclick='ManageBudget(\"" + full.UserId + "\")' class='btn btn-block btn-outline-primary'><span class='pe-7s-note'> Manage Budget</span></a>";
+
+                    }
+                }
+            ]
+    })
+    $(".dataTables_scrollHeadInner").css({"width":"100%"});
+    $(".table ").css({ "width": "100%" });
+
+    //Show Pop Up Modal For Detail Form
+    function ManageBudget(UserId) {
+        var url = "/BalimoonUser/ManageBudgetBML?UserId=" + UserId;
+                $("#ModalTitle").html("Manage Budget");
+                $("#MyLargeModal").modal();
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        $("#UserId").val(obj.UserId);
+                        $("#UserName").val(obj.UserName);
+                        $("#Role").val(obj.Role);
+                        $("#MaksimumBudget").val(obj.MaksimumBudget);
+                    }
+                })
+    }
+</script>
+<script>
+    $(function () {
+        $("#MyLargeModal form").validate({
+            rules: {
+                UserName: {
+                    required: true
+                }
+            },
+            submitHandler: function (form) {
+                var getUser = document.getElementById('UserName').value;
+                var getBudget = document.getElementById('MaksimumBudget').value;
+                Swal.fire({
+                    title: 'Update Budget',
+                    text: 'Are You Sure Want To Update Budget ' + getUser + ' to Rp.' + getBudget + '?',
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#002afc',
+                    cancelButtonColor: '#fc0303',
+                    confirmButtonText: 'Update'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: "/BalimoonUser/UpdateBudgetBML",
+                            type: 'POST',
+                            data: $(form).serialize(),
+                            success: function (result) {
+                                if (result == true) {
+                                    Swal.fire(
+                                        'Saved!',
+                                        'Your file has been saved.',
+                                        'success'
+                                    ).then((result) => {
+                                        window.location.href = "/BalimoonUser/BudgetApprovalBML";
+                                        $("#MyLargeModal").modal("hide");
+                                    })
+                                }
+                                else {
+                                    Swal.fire({
+                                        type: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!, Check The Require Field Again'
+                                    })
+                                }
+                            }
+                        });
+                    }
+                })
+            }
+        })
+    })
+</script>
+}
+
+@section Styles{
+    <div class="modal fade bd-example-modal-lg" id="MyLargeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="ModalTitle"></h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form" role="form">
+                        <fieldset id="SubmitForm">
+                            @Html.HiddenFor(a => a.aspNetSystemUsers.UserId, new { @id = "UserId" })
+                            <div class="form-group">
+                                <label>UserName</label>
+                                @Html.TextBoxFor(a => a.aspNetUsers.UserName, new { @id = "UserName", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                @Html.TextBoxFor(a => a.aspNetRoles.Name, new { @id = "Role", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Department</label>
+                                @Html.TextBoxFor(a => a.aspNetSystemUsers.DepartmentCode, new { @id = "Department", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Maksimum Budget</label>
+                                @Html.TextBoxFor(a => a.aspNetSystemUsers.PurchaseAmountApprovalLimit, new { @id = "MaksimumBudget", @class = "form-control", @placeholder = "Rp.", @required = "required" })
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="UpdateBudget"><span class="pe-7s-upload"> Save</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+ }

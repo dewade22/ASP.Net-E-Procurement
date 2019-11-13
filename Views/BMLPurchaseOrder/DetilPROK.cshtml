@@ -1,0 +1,258 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.BMLPurchaseOrderVM
+@{
+    ViewData["Title"] = "Detil PR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Detil PR</h3>
+<section class="content">
+    <div class="card" id="cardedit">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title" id="judulcardedit"></h4>
+                </div>
+                <div class="card-body">
+                    @Html.HiddenFor(a=>a.purchaseRequisitionLine.RequisitionLineId, new { @id="LineId"})
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label>Item Name</label>
+                            @Html.TextBoxFor(a => a.purchaseRequisitionLine.Description2, new { @id = "Desc2", @class = "form-control", @readonly = "readonly" })
+                        </div>
+                        <div class="col-md-6">
+                            <label>Item Description</label>
+                            @Html.TextBoxFor(a=>a.purchaseRequisitionLine.Description, new { @id="Desc", @class="form-control", @readonly ="readonly"})
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">@ViewBag.PRNO</h4>
+                </div>
+                <div class="card-body">
+                    <form id="FormDetilPR">
+                        <fieldset id="isi_form">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <input asp-for="purchaseRequisitionHeader.RequisitionHeaderId" id="RequisitionHeaderId" hidden />
+                            </div>
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <label asp-for="purchaseRequisitionHeader.RequisitionNo">PR No.</label>
+                                    <input asp-for="purchaseRequisitionHeader.RequisitionNo" id="RequisitionNo" disabled class="form-control" />
+                                    <span asp-validation-for="purchaseRequisitionHeader.RequisitionNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-6">
+                                    <label asp-for="purchaseRequisitionHeader.RequesterId">Requester</label>
+                                    <input asp-for="purchaseRequisitionHeader.RequesterId" id="pengirim" disabled class="form-control" />
+                                    <span asp-validation-for="purchaseRequisitionHeader.RequesterId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <label asp-for="purchaseRequisitionHeader.ShortcutDimension1Code">Department</label>
+                                    <input asp-for="purchaseRequisitionHeader.ShortcutDimension1Code" id="department" class="form-control" disabled />
+                                    <span asp-validation-for="purchaseRequisitionHeader.ShortcutDimension1Code" class="text-danger"></span>
+                                </div>
+                                <div class="col-6">
+                                    <label asp-for="purchaseRequisitionHeader.Priority">Priority</label>
+                                    @Html.DropDownListFor(a => a.purchaseRequisitionHeader.Priority, ViewBag.Priority as SelectList, "", new { @id = "priority", @class = "form-control", @readonly = "readonly", @disable = "disable" })
+                                    <span asp-validation-for="purchaseRequisitionHeader.Priority" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <label asp-for="purchaseRequisitionHeader.OrderDate">Order Date</label>
+                                    <input asp-for="purchaseRequisitionHeader.OrderDate" class="form-control" disabled id="order" />
+                                    <span asp-validation-for="purchaseRequisitionHeader.OrderDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-6">
+                                    <label asp-for="purchaseRequisitionHeader.DueDate">Due Date</label>
+                                    <input asp-for="purchaseRequisitionHeader.DueDate" class="form-control" id="due" disabled />
+                                    <span asp-validation-for="purchaseRequisitionHeader.DueDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="purchaseRequisitionHeader.RequestNotes">Request Notes</label>
+                                <textarea asp-for="purchaseRequisitionHeader.RequestNotes" id="catatan" class="form-control" disabled></textarea>
+                                <span asp-validation-for="purchaseRequisitionHeader.RequestNotes" class="text-danger"></span>
+                            </div>
+                            <hr />
+                            <button type="button" id="BtnShow" style="width:150px" class="btn btn-outline-success" onclick="Show(document.getElementById('RequisitionHeaderId').value);"><span class="pe-7s-look"></span>  Show</button><!--Untuk Mengisi Tabel-->
+                            <button type="button" class="btn btn-danger" id="tombolHide" style="width:150px"><span class="pe-7s-look"> </span> Hide</button> <!--Untuk Menyembunyikan Tabel-->
+                            <button type="button" class="btn btn-primary" id="tombolShow" style="width:150px"><span class="pe-7s-look"> </span> Show</button> <!--Untuk Menampilkan Kembali-->
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" id="cardtable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">Table Items</h4>
+                </div>
+                <div class="card-body">
+                    <table id="tabelitem" class="table table-warning">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>No</th>
+                                <th>Item Name</th>
+                                <th>Description</th>
+                                <th>Unit</th>
+                                <th>Qty</th>
+                                <th>Cost</th>
+                                <th>Amount</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <br />
+                    <button type="button" id="back" class="btn btn-outline-danger" style="width:150px"><span class="pe-7s-back"></span>  Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#priority").css("pointer-events", "none");
+            $("#BtnShow").show();
+            $("#tabelitem").hide();
+            $("#judul_tabel").hide();
+            $("#back").hide();
+            $("#cardtable").hide();
+            $("#tombolHide").hide();
+            $("#tombolShow").hide();
+            $("#cardedit").hide();
+        });
+    </script>
+    <script>
+        //Memunculkan Semua form
+        function Show(RequisitionHeaderId) {
+            $("#tabelitem").show();
+            $("#tombolHide").show();
+            $("#cardtable").show();
+            $("#judul_tabel").show();
+            $("#back").show();
+            $("#BtnShow").hide();
+            $("#tabelitem").DataTable({
+                //Design Layout
+                stateSave: true,
+                autoWidth: true,
+                destroy: true,
+                scrollX: true,
+
+                //server side
+                processing: true,
+                serverSide: true,
+
+                //Paging Setup
+                paging: true,
+
+                //searching Setup
+                searching: { regex: true },
+
+                //ajax Filter
+                ajax: {
+                    url: "/BMLPurchaseOrder/TabelPRJadi?RequisitionHeaderId=" + RequisitionHeaderId,
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+
+                //column definition
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+                            return data;
+                        }
+                    },
+                    { targets: "data-type", type: "date-eu" }
+                ],
+
+                columns: [
+                    { data: "RequisitionLineId", isIdentity: true, visible: false },
+                    { data: "SeqLineNo" },
+                    { data: "ItemName" },
+                    { data: "Description" },
+                    { data: "UnitofMeasure" },
+                    { data: "Quantity" },
+                    { data: "UnitCost" },
+                    { data: "Amount" },
+                    {
+                        render: function (data, type, full, meta) {
+                            return "<a href='#' onclick='EditRecord(\"" + full.RequisitionLineId + "\")' class='btn btn-outline-info'><span class='pe-7s-note'> Edit</span></a>";
+                        }
+                    },
+                    {
+                        render: function (data, type, full, meta) {
+                            return "<a href='#' onclick='DeleteRecord(\"" + full.RequisitionLineId + "\")' class='btn btn-outline-info'><span class='pe-7s-trash'> Delete</span></a>";
+                        }
+                    }
+                ]
+            })
+            $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+            $(".table ").css({ "width": "100%" });
+        }
+    </script>
+<script>
+    $("#tombolHide").click(function () {
+        $("#cardtable").hide();
+        $("#tombolShow").show();
+        $("#tombolHide").hide();
+    })
+</script>
+<script>
+    $("#tombolShow").click(function () {
+        $("#cardtable").show();
+        $("#tombolHide").show();
+        $("#tombolShow").hide();
+    })
+</script>
+<script>
+    $("#back").click(function () {
+        window.location.href = "/BMLPurchaseOrder/PurchasingIndex";
+    })
+</script>
+<script>
+    function EditRecord(RequisitionLineId) {
+        var link = "/BMLPurchaseOrder/EditPRLine?RequisitionLineId=" + RequisitionLineId;
+        $("#cardedit").show();
+         $.ajax({
+                type: "GET",
+                url: link,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#LineId").val(obj.LineId);
+                    $("#Desc2").val(obj.Desc2);
+                    $("#judulcardedit").html('Edit ' + obj.PRNO + ', No. ' + obj.SeqNo);
+                    $("#Desc").val(obj.Desc);
+                }
+            })
+    }
+</script>
+}

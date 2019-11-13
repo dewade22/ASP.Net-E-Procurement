@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Balimoon_E_Procurement.Models.UserRoleVM>
+﻿@model Balimoon_E_Procurement.Models.UserRoleVM
 @{
     ViewData["Title"] = "Userrole";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,54 +14,33 @@
                     <h3 class="card-title">Confirmed User</h3>
                 </div>
                 <div class="card-body">
-                    <table id="tabel1" class="table table-bordered table-striped">
-                       <thead>
-                           <tr>
-                               <th>
-                                   User Name
-                               </th>
-                               <th>
-                                   E-Mail
-                               </th>
-                               <th>
-                                   Phone Number
-                               </th>
-                               <th>
-                                   Role Code
-                               </th>
-                               <th>
-                                   Role Name
-                               </th>
-                               <th>
-                                   Action
-                               </th>
-                           </tr>
-                       </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.usertbl.UserName)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.usertbl.Email)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.usertbl.PhoneNumber)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.roletbl.ConcurrencyStamp)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.roletbl.Name)
-                                    </td>
-                                    <td>
-                                        <a asp-action="Userroleform" asp-route-id="@item.usertbl.Id" class="btn btn-primary text-bold">Update Role</a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
+                    <table id="tabel5" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>
+                                    User ID
+                                </th>
+                                <th>
+                                    User Name
+                                </th>
+                                <th>
+                                    E-Mail
+                                </th>
+                                <th>
+                                    Phone Number
+                                </th>
+                                <th>
+                                    Role Code
+                                </th>
+                                <th>
+                                    Role Name
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="SetUserList"></tbody>
                     </table>
                 </div>
             </div>
@@ -69,9 +48,192 @@
     </div>
 </section>
 
+@section Styles{
+    <!-- modal -->
+
+    <div class="modal fade bd-example-modal-lg" id="MyLargeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="ModalTitle"></h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form">
+                        <fieldset id="SubmitForm">
+                            <div class="form-group">
+                                <label>User Id</label>
+                                @Html.TextBoxFor(a=>a.usertbl.Id, new { @id="Id", @class="form-control", @readonly="readonly"})
+                            </div>
+                            <div class="form-group">
+                                <label>User Name</label>
+                                @Html.TextBoxFor(a=>a.usertbl.UserName, new { @id="UserName", @class="form-control", @readonly="readonly"})
+                            </div>
+                            <div class="form-group">
+                                <label>E-Mail</label>
+                                @Html.TextBoxFor(a=>a.usertbl.Email, new{ @id="Email", @class="form-control", @readonly="readonly"})
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                @Html.TextBoxFor(a=>a.usertbl.PhoneNumber, new { @id="PhoneNumber", @class="form-control", @readonly="readonly"})
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                @Html.DropDownListFor(a => a.roletbl.Id, ViewBag.ListOfRoles as SelectList, "---Select Role---", new { @id = "DropDown", @class = "form-control"})
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="#" class="btn btn-primary" id="UpdateUserRole"><span class="pe-7s-upload"> Save</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+@section Scripts{
+    <script>
+        //Get User Data Passing to Index Form
+
+        $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+        $.fn.dataTable.moment("DD/MM/YYYY");
+
+
+        $("#tabel5").DataTable({
+            //Design Layout
+            stateSave: true,
+            autoWidth: true,
+            scrollX: true,
+            
+
+            //ServerSide
+            processing: true,
+            serverSide: true,
+
+            //Paging Setup
+            paging: true,
+        
+
+            //searching Setup
+            searching: { regex: true },
+
+            //ajax Filter
+            ajax: {
+                url: "/Users/GetUserRoleList",
+                //"dataSrc": '',
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+
+            //column definition
+            columnDefs: [
+                
+                { targets: "no-sort", orderable: false },
+                { targets: "no-search", searchable: false },
+                {
+                    targets: "trim",
+                    render: function (data, type, full, meta) {
+                        if (type === "display") {
+                            data = strtrunc(data, 10);
+                        }
+                        return data;
+                    }
+                },
+                { targets: "data-type", type: "date-eu" }
+            ],
+
+            columns: [
+                { data: "Id", name: "Id",  isIdentity: true, visible: false  },
+                { data: "UserName", name: "username" },
+                { data: "Email", name: "email" },
+                { data: "PhoneNumber", name: "phone" },
+                { data: "rolenormalized", name: "rolenormalized" },
+                { data: "rolename", name: "rolename" },
+                {
+                    render: function (data, type, full, meta) {
+                        return "<a href='#' onclick='UserRolesDetails(\"" + full.Id + "\")' class='btn btn-outline-primary'><span class='pe-7s-note'> Change Role</span></a>";
+
+                    }
+                }
+            ]
+        })
+        $(".dataTables_scrollHeadInner").css({"width":"100%"});
+        $(".table ").css({"width":"100%"});
+            
+
+            $("#UpdateUserRole").click(function () {
+                var data = $("#SubmitForm").serialize();
+                Swal.fire({
+                    title: 'Update Role',
+                    text: 'Are You Sure Want To Update Role?',
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#002afc',
+                    cancelButtonColor: '#f3baf5',
+                    confirmButtonText: 'Yes, Update Now!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/Users/UpdateUserRole",
+                            data: data,
+                            success: function (result) {
+                                if (result == true) {
+                                    Swal.fire(
+                                        'Updated!',
+                                        'Your file has been saved.',
+                                        'success'
+                                    ).then((result) => {
+                                        window.location.href = "/Users/Userrole";
+                                        $("#MyLargeModal").modal("hide");
+                                    });
+                                }
+                                else {
+                                    Swal.fire({
+                                        type: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!, Check The Require Field Again'
+                                    })
+                                }
+                            }
+                        })
+                    }
+                })
+            })
+
+
+    </script>
 <script>
-    $(function(){
-        $('#tabel1').DataTable();
-    )};
+    //Show Pop Up Modal For Detail Form
+    function UserRolesDetails(Id) {
+        var url = "/Users/GetUserRoleById?Id=" + Id;
+        $("#ModalTitle").html("Update User Role");
+        $("#MyLargeModal").modal();
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $("#Id").val(obj.Id);
+                $("#UserName").val(obj.UserName);
+                $("#Email").val(obj.Email);
+                $("#PhoneNumber").val(obj.PhoneNumber);
+                $("#DropDown").val(obj.RoleId);
+                $("#DropDown").trigger("chosen:updated");
+            }
+        })
+    }
 </script>
+<script>
+    //Chosen Script
+    $("#DropDown").chosen();
+    $('.chosen-container').css('width', '100%');
+</script>
+}
 

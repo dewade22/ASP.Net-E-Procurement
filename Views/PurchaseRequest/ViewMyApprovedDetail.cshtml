@@ -1,0 +1,315 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.PurchaseRequestVM
+@{
+    ViewData["Title"] = "My Approved PR Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>BalimOOn Liqueurs</h3>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">Detil Approved @ViewBag.PRNO</h4>
+                </div>
+                <div class="card-body">
+                    <form id="form-body" role="form">
+                        <fieldset id="BodyFormValue">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                @Html.HiddenFor(a => a.HeaderTbl.RequisitionHeaderId, new { @id = "RequisitionID" })
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label asp-for="HeaderTbl.RequisitionNo">PR No.</label>
+                                    <input asp-for="HeaderTbl.RequisitionNo" id="RequisitionNo" class="form-control" disabled />
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="HeaderTbl.RequesterId">Requester</label>
+                                    @Html.TextBoxFor(a => a.HeaderTbl.RequesterId, new { @id = "requester", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Order Date</label>
+                                    @Html.TextBoxFor(a => a.HeaderTbl.OrderDate, new { @id = "OrderDate", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Due Date</label>
+                                    @Html.TextBoxFor(a => a.HeaderTbl.DueDate, new { @id = "DueDate", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Approved Date</label>
+                                    @Html.TextBoxFor(a => a.ApprovalEntry.CreatedTime, new { @id = "RejectedDate", @class = "form-control", @readonly = "readonly" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="text-dark">Status PR</label>
+                                    @Html.DropDownListFor(a => a.HeaderTbl.Status, @ViewBag.ListOfStatus as SelectList, "", new { @id = "status", @class = "form-control", @readonly = "readonly", @disabled = "disabled" })
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">Item on @ViewBag.PRNO</h4>
+                </div>
+                <div class="card-body">
+                    <table id="tabel-6" class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>No</th>
+                                <th>Item Name</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Info</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4" style="text-align:right">Total:</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <br />
+                    <br />
+                    <div class="form-row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button type="button" id="back" class="btn btn-block btn-outline-danger"><span class="fa fa-arrow-alt-circle-left"></span> Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    <script>
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    </script>
+    <script type="text/javascript" src="~/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+            $.fn.dataTable.moment("DD/MM/YYYY");
+            var RequisitionNo = document.getElementById('RequisitionNo').value;
+            //Deklarasi Data Tabel
+            $("#tabel-6").DataTable({
+                //Design Layout
+                stateSave: true,
+                autoWidth: true,
+                scrollX: true,
+
+                //ServerSide
+                processing: true,
+                serverSide: true,
+
+                //Paging Setup
+                paging: true,
+
+                //searching Setup
+                searching: { regex: true },
+
+                //ajax Filter
+                ajax: {
+                    url: "/PurchaseRequest/testing?RequisitionNo=" + RequisitionNo,
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+
+                //column definition
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+                            return data;
+                        }
+                    },
+                    { targets: "data-type", type: "date-eu" }
+                ],
+
+                //Column to Show Data
+                columns: [
+                    { data: "RequisitionLineId", isIdentity: true, visible: false },
+                    { data: "SeqLineNo" },
+                    { data: "ItemName" },
+                    { data: "Description" },
+                    { data: "Amount", render: $.fn.dataTable.render.number(',', '.', 2) },
+                    {
+                        render: function (data, type, full, meta) {
+                            return "<a href='#' onclick='Detail(\"" + full.RequisitionLineId + "\")' class='btn btn-outline-info btn-block'><span class='fa fa-eye'></span></a>";
+                        }
+                    }
+
+                ],
+                "footerCallback": function (row, data, start, end, display) {
+                    var api = this.api(), data;
+                    var numFormat = $.fn.dataTable.render.number('\,', '.', 2).display;
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+
+                    // Total over all pages
+                    total = api
+                        .column(4)
+                        .data()
+                        .reduce(function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+
+                    // Update footer
+                    $(api.column(4).footer()).html(
+                        numFormat(total)
+                    );
+                }
+            })
+            $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+            $(".table ").css({ "width": "100%" });
+        })
+    </script>
+
+    <script>
+        $("#back").click(function () {
+            window.location.href = "/PurchaseRequest/ViewMyApproved";
+        })
+    </script>
+    <script>
+        function Detail(RequisitionLineId) {
+            var link = "/PurchaseRequest/EditLineReject?RequisitionLineId=" + RequisitionLineId;
+            $("#DetilModal").modal();
+            $.ajax({
+                type: "GET",
+                url: link,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#RequisitionLineID").val(obj.RequisitionLineId);
+                    $("#JudulModalEdit").html("Detil " + obj.DocumentNo + " No. " + obj.SeqLineNo);
+                    $("#SeqLineNo").text(obj.SeqLineNo);
+                    $("#RecordType").text(obj.RecordType);
+                    $("#CatCode").text(obj.ItemCategoryCode);
+                    $("#recordNo").text(obj.RecordNo);
+                    $("#Description").text(obj.Description);
+                    $("#qty").text(obj.Quantity);
+                    $("#UoM").text(obj.UnitofMeasure);
+                    $("#Vendor").text(obj.VendorNo);
+                    $("#Cost").text(obj.UnitCost);
+                    $("#Amount").text(obj.CostAmount);
+                    var imagesrc = "/Images/PRImages/default.jpg"
+                    if (obj.Picture != null) {
+                        imagesrc = "/Images/PRImages/" + obj.Picture;
+                    }
+                    $("#mypict").attr("src", imagesrc);
+                    $("#link-pict").attr("href", imagesrc);
+                }
+            })
+        }
+    </script>
+}
+@section Styles{
+    <link rel="stylesheet" href="~/lib/fancybox/dist/jquery.fancybox.min.css" />
+    <div class="modal fade" id="DetilModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="JudulModalEdit"></h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="DetilModalForm" role="form">
+                        @Html.HiddenFor(a => a.LineTbl.RequisitionLineId, new { @id = "RequisitionLineID" })
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <table style="width:100%; position:relative; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:15px">
+                                    <tr>
+                                        <td width="40%">No</td>
+                                        <td width="5%">:</td>
+                                        <td><span id="SeqLineNo"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Record Type</td>
+                                        <td>:</td>
+                                        <td><span id="RecordType"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category Code</td>
+                                        <td>:</td>
+                                        <td><span id="CatCode"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Category</td>
+                                        <td>:</td>
+                                        <td><span id="recordNo"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>:</td>
+                                        <td><span id="Description"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quantity</td>
+                                        <td>:</td>
+                                        <td><span id="qty"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unit of Measure</td>
+                                        <td>:</td>
+                                        <td><span id="UoM"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vendor</td>
+                                        <td>:</td>
+                                        <td><span id="Vendor"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unit Cost</td>
+                                        <td>:</td>
+                                        <td><span id="Cost"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amount</td>
+                                        <td>:</td>
+                                        <td><span id="Amount"></span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="fa fa-images"> Item Image</span><br />
+                                <a id="link-pict" data-fancybox data-caption="Item on This PR">
+                                    <img id="mypict" alt="Item Image" style="width:300px; border-radius:5%" title="Item Image" />
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

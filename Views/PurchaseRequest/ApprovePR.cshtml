@@ -1,0 +1,114 @@
+﻿@model  Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.PurchaseRequestVM
+@{
+    ViewData["Title"] = "ApprovePR";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BalimOOn Liqueurs</h2>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h3 class="card-title">PR Waiting To Approve</h3>
+                </div>
+                <div class="card-body">
+                    <table id="tabel5" class="table table-warning">
+                        <thead>
+                            <tr>
+                                <th>PR Id</th>
+                                <th>PR No</th>
+                                <th>Requester</th>
+                                <th>Created Time</th>
+                                <th>Request Notes</th>
+                                <th>View</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+<script>
+    //untuk form load
+        $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+        $.fn.dataTable.moment("DD/MM/YYYY");
+       
+        $("#tabel5").DataTable({
+                //Design Layout
+                stateSave: true,
+                autoWidth: true,
+                scrollX: true,
+
+                //ServerSide
+                processing: true,
+                serverSide: true,
+
+                //Paging Setup
+                paging: true,
+                destroy:true,
+  
+                //searching Setup
+                searching: { regex: true },
+
+                //ajax Filter
+                ajax: {
+                    url: "/PurchaseRequest/ApprovePRTable",
+                    //"dataSrc": '',
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+
+                //column definition
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+                            return data;
+                        }
+                    },
+                    { targets: "data-type", type: "date-eu" }
+                ],
+
+                columns: [
+                    { data: "RequisitionHeaderId", isIdentity: true, visible: false },
+                    { data: "RequisitionNo" },
+                    { data: "RequesterId" },
+                    {
+                        data: "CreatedTime", render: function (data, type) {
+                            if (type === "display" || type === "filter") {
+                                return moment(data).format("dddd, DD-MM-YYYY");
+                            }
+                            return data;
+                        }
+                    },
+                    { data: "RequestNotes" },
+                    {
+                        render: function (data, type, full, meta) {
+                            return "<a href='#' onclick='ViewDetail(\"" + full.RequisitionNo + "\")' class='btn btn-outline-info btn-block'><span class='fa fa-info-circle'></span></a>";
+                        }
+                    },
+                ]
+        })
+        
+        $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+        $(".table ").css({ "width": "100%" });
+</script>
+<script>
+    function ViewDetail(RequisitionNo) {
+        window.location.href = "/PurchaseRequest/InfoPRApprove?RequisitionNo=" + RequisitionNo;
+    }
+</script>
+}

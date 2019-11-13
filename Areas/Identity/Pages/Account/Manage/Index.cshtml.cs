@@ -109,7 +109,7 @@ namespace Balimoon_E_Procurement.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Success";
             return RedirectToPage();
         }
 

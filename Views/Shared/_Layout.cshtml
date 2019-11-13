@@ -7,30 +7,25 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta http-equiv="Content-Language" content="en">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>@ViewData["Title"] - Balimoon_E_Procurement</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
     <meta name="description" content="This is an example dashboard created using build-in elements and components.">
     <meta name="msapplication-tap-highlight" content="no">
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link href="~/lib/main.css" rel="stylesheet" />
-
-
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
-
-    </environment>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="~/lib/main.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link rel="stylesheet" href="~/lib/Adminlte/plugins/datatables/dataTables.bootstrap4.min.css" />
     <link rel="stylesheet" href="~/lib/Adminlte/dist/css/adminlte.min.css" />
+    <link rel="stylesheet" href="~/lib/Adminlte/plugins/datatables/CustomDataTable.css" />
+    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/lib/Chosen/chosen.min.css" />
+    <link rel="stylesheet" href="~/css/custom.css" />
+    <!--<link rel="stylesheet" href="//cdn.datatables.net/responsive/2.2.3/css/dataTables.responsive.css" />-->
+    <!--<link rel="stylesheet" href="~/lib/Adminlte/plugins/datatables/dataTables.bootstrap4.min.css" asp-append-version="true" />-->
+
+    @RenderSection("Styles", required: false)
 </head>
 <body>
 
@@ -442,11 +437,17 @@
                             </button>
                         </span>
                     </div>
+                    <!--Role Base Access Control-->
                     @if (User.IsInRole("Admin"))
                     {
+                        <!--Role Admin-->
                         <div class="scrollbar-sidebar">
                             <div class="app-sidebar__inner">
                                 <ul class="vertical-nav-menu">
+                                    <hr />
+                                    <li class="app-sidebar__heading h3">@User.Identity.Name</li>
+                                    <li class="app-sidebar__heading" style="color:black"><span class="fas fa-circle" style="color:#169908"></span> online</li>
+                                    <hr />
                                     <li class="app-sidebar__heading">Balimoon Dashboards</li>
                                     <li>
                                         <a asp-area="" asp-controller="Home" asp-action="Index">
@@ -509,46 +510,658 @@
                                                     Manage User Role
                                                 </a>
                                             </li>
+                                            <li>
+                                                <a asp-controller="Users" asp-action="VendorData">
+                                                    <i class="metismenu-icon"></i>
+                                                    View Vendor Data
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    <li>
+                                        <a asp-controller="Users" asp-action="ManageVendorData">
+                                            <i class="metismenu-icon pe-7s-plugin">
+                                            </i>Manage Vendor Data
+                                        </a>
+                                    </li>
+
+                                    <li class="app-sidebar__heading">Internal User Account</li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-id"></i>
+                                            BML User
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="BalimoonUser" asp-action="BMLIndex">
+                                                    <i class="metismenu-icon"></i>
+                                                    Add Detail User
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="BalimoonUser" asp-action="AddApprovalBML">
+                                                    <i class="metismenu-icon"></i>
+                                                    Add User Approval
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="BalimoonUser" asp-action="BudgetApprovalBML">
+                                                    <i class="metismenu-icon"></i>
+                                                    Add Maximum Budget
+                                                </a>
+                                            </li>
                                         </ul>
                                     </li>
-                                    <li class="app-sidebar__heading">Widgets</li>
                                     <li>
-                                        <a href="dashboard-boxes.html">
-                                            <i class="metismenu-icon pe-7s-display2"></i>
-                                            Dashboard Boxes
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-id"></i>
+                                            BMI User
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="BalimoonUser" asp-action="BMIIndex">
+                                                    <i class="metismenu-icon"></i>
+                                                    Add Detail User
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="BalimoonUser" asp-action="AddApprovalBMI">
+                                                    <i class="metismenu-icon"></i>
+                                                    Add User Approval
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="BalimoonUser" asp-action="BudgetApprovalBMI">
+                                                    <i class="metismenu-icon"></i>
+                                                    Add Maximum Budget
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="app-sidebar__heading">Purchase</li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-wallet"></i>
+                                            BML Purchase Request
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="List">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="Open">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Open
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="Release">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Release
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="PendingApproval">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Pending Approval
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="PendingPrePayment">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Pending PrePayment
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="Archived">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Archived
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="Closed">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Closed
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="Posted">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Posted
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="Cancelled">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Cancelled
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="Rejected">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Rejected
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-cart"></i>
+                                            BML Purchase Order
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="BMLPurchaseOrder" asp-action="List">
+                                                    <i class="metismenu-icon"></i>
+                                                    PO List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="BMLPurchaseOrder" asp-action="Open">
+                                                    <i class="metismenu-icon"></i>
+                                                    PO OPEN - List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="BMLPurchaseOrder" asp-action="Release">
+                                                    <i class="metismenu-icon"></i>
+                                                    PO Release - List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="BMLPurchaseOrder" asp-action="PendingApproval">
+                                                    <i class="metismenu-icon"></i>
+                                                    PO Pending Approval
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="BMLPurchaseOrder" asp-action="PendingPrePayment">
+                                                    <i class="metismenu-icon"></i>
+                                                    PO Pending PrePayment
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="BMLPurchaseOrder" asp-action="Archived">
+                                                    <i class="metismenu-icon"></i>
+                                                    PO Archived - List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="BMLPurchaseOrder" asp-action="Closed">
+                                                    <i class="metismenu-icon"></i>
+                                                    PO Closed - List
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-wallet"></i>
+                                            BMI Purchase Request
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="BMIPurchaseRequest" asp-action="List">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR List
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-cart"></i>
+                                            BMI Purchase Order
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-controller="BMIPurchaseOrder" asp-action="List">
+                                                    <i class="metismenu-icon"></i>
+                                                    PO List
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                    }
+                    else if (User.IsInRole("Finance"))
+                    {
+                        <!--Finance Role-->
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
                                         </a>
                                     </li>
-                                    <li class="app-sidebar__heading">Forms</li>
                                     <li>
-                                        <a href="forms-controls.html">
-                                            <i class="metismenu-icon pe-7s-mouse">
-                                            </i>Forms Controls
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="forms-layouts.html">
-                                            <i class="metismenu-icon pe-7s-eyedropper">
-                                            </i>Forms Layouts
+                                        <a asp-area="" asp-controller="PurchaseRequest" asp-action="ApprovePR">
+                                            <i class="metismenu-icon pe-7s-like2"></i>
+                                            Approve PR
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="forms-validation.html">
-                                            <i class="metismenu-icon pe-7s-pendrive">
-                                            </i>Forms Validation
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-cart"></i>
+                                            Details PR
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="ViewMyCancelled">
+                                                    <i class="metismenu-icon pe-7s-like2"></i>
+                                                    Cancelled PR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="ViewMyReject">
+                                                    <i class="metismenu-icon"></i>
+                                                    Rejected PR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="ViewMyApproved">
+                                                    <i class="metismenu-icon"></i>
+                                                    Approved PR
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else if (User.IsInRole("Director"))
+                    {
+                        <!--Director Role-->
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
                                         </a>
                                     </li>
-                                    <li class="app-sidebar__heading">Charts</li>
                                     <li>
-                                        <a href="charts-chartjs.html">
-                                            <i class="metismenu-icon pe-7s-graph2">
-                                            </i>ChartJS
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="PurchaseRequest" asp-action="ApprovePR">
+                                            <i class="metismenu-icon pe-7s-like2"></i>
+                                            Approve PR
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-cart"></i>
+                                            Details PR
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="ViewMyCancelled">
+                                                    <i class="metismenu-icon pe-7s-like2"></i>
+                                                    Cancelled PR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="ViewMyReject">
+                                                    <i class="metismenu-icon"></i>
+                                                    Rejected PR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="ViewMyApproved">
+                                                    <i class="metismenu-icon"></i>
+                                                    Approved PR
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else if (User.IsInRole("GM"))
+                    {
+                        <!--GM Role-->
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="PurchaseRequest" asp-action="ApprovePR">
+                                            <i class="metismenu-icon pe-7s-like2"></i>
+                                            Approve PR
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-cart"></i>
+                                            Details PR
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="ViewMyCancelled">
+                                                    <i class="metismenu-icon pe-7s-like2"></i>
+                                                    Cancelled PR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="ViewMyReject">
+                                                    <i class="metismenu-icon"></i>
+                                                    Rejected PR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="ViewMyApproved">
+                                                    <i class="metismenu-icon"></i>
+                                                    Approved PR
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else if (User.IsInRole("HODBML"))
+                    {
+                        <!--Executive Director Role-->
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+                                    <li class="app-sidebar__heading">Purchase Request</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="PurchaseRequest" asp-action="AddPR">
+                                            <i class="metismenu-icon pe-7s-note2"></i>
+                                            Submit PR
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="PurchaseRequest" asp-action="ApprovePR">
+                                            <i class="metismenu-icon pe-7s-like2"></i>
+                                            Approve PR
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-cart"></i>
+                                            Details PR
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="ViewMyCancelled">
+                                                    <i class="metismenu-icon pe-7s-like2"></i>
+                                                    Cancelled PR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="ViewMyReject">
+                                                    <i class="metismenu-icon"></i>
+                                                    Rejected PR
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="ViewMyApproved">
+                                                    <i class="metismenu-icon"></i>
+                                                    Approved PR
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else if (User.IsInRole("Vendor"))
+                    {
+                        <!--Vendor Role-->
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="VendorData" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-portfolio"></i>
+                                            Update Vendor Data
                                         </a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     }
-                    else
+                    else if (User.IsInRole("UserBML"))
+                    {
+                        <!--User Role-->
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <hr />
+                                    <li class="app-sidebar__heading h3">@User.Identity.Name</li>
+                                    <li class="app-sidebar__heading" style="color:black"><span class="fas fa-circle" style="color:#169908"></span> online</li>
+                                    <hr />
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+                                    <li class="app-sidebar__heading">Account</li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-settings"></i>
+                                            Setting
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="Identity" asp-page="/Account/Manage/Index">
+                                                    <i class="metismenu-icon"></i>
+                                                    Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="Identity" asp-page="/Account/Manage/ChangePassword">
+                                                    <i class="metismenu-icon">
+                                                    </i>Change Password
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="app-sidebar__heading">Purchase Request</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="PurchaseRequest" asp-action="AddPR">
+                                            <i class="metismenu-icon pe-7s-note2"></i>
+                                            Submit PR
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-notebook"></i>
+                                            My PR
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="MyPROpen">
+                                                    <i class="metismenu-icon"></i>
+                                                    Open
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="MyCancelledPR">
+                                                    <i class="metismenu-icon"></i>
+                                                    Cancelled
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="MyRejectedPR">
+                                                    <i class="metismenu-icon"></i>
+                                                    Rejected
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="MyReleasePR">
+                                                    <i class="metismenu-icon"></i>
+                                                    Release
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="MyPendingAprPR">
+                                                    <i class="metismenu-icon"></i>
+                                                    Pending Approval
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="MyPostedPR">
+                                                    <i class="metismenu-state-icon"></i>
+                                                    Posted
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-area="" asp-controller="PurchaseRequest" asp-action="MyClosedPR">
+                                                    <i class="metismenu-icon"></i>
+                                                    Closed
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="PurchaseRequest" asp-action="RecordList">
+                                                    <i class="metismenu-icon"></i>
+                                                    My PR List
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else if (User.IsInRole("Purchasing"))
+                    {
+                        <!--Login With Purchasing Role-->
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="metismenu-icon pe-7s-cart"></i>
+                                            BML Purchase Order
+                                            <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                        </a>
+                                        <ul>
+                                            <li>
+                                                <a asp-controller="BMLPurchaseOrder" asp-action="PurchasingIndex">
+                                                    <i class="metismenu-icon"></i>
+                                                    PR Ready Create
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="BMLPurchaseOrder" asp-action="ExpirePRR">
+                                                    <i class="metismenu-icon"></i>
+                                                    Expire PR
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                    else if (User.IsInRole("Disable"))
                     {
                         <div class="scrollbar-sidebar">
                             <div class="app-sidebar__inner">
@@ -570,9 +1183,37 @@
                             </div>
                         </div>
                     }
+                    else
+                    {
+                        <!--Login without Role-->
+                        <div class="scrollbar-sidebar">
+                            <div class="app-sidebar__inner">
+                                <ul class="vertical-nav-menu">
+                                    <li class="app-sidebar__heading">Balimoon Dashboards</li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-home"></i>
+                                            Index
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="Home" asp-action="Privacy">
+                                            <i class="metismenu-icon pe-7s-lock"></i>
+                                            Privacy
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a asp-area="" asp-controller="VendorData" asp-action="Index">
+                                            <i class="metismenu-icon pe-7s-portfolio"></i>
+                                            Add Vendor Data
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
 
                 </div>
-
                 }
                 else
                 {
@@ -582,7 +1223,7 @@
                 <!--Awal Main Body-->
                 <div class="app-main__outer">
                     <div class="col-xl-12">
-                            @RenderBody()
+                        @RenderBody()
                     </div>
 
                     <!-- Awal Footer-->
@@ -590,35 +1231,12 @@
                         <div class="app-footer">
                             <div class="app-footer__inner">
                                 <div class="app-footer-left">
-                                    <ul class="nav">
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0);" class="nav-link">
-                                                Footer Link 1
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0);" class="nav-link">
-                                                Footer Link 2
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <div>
+                                        &copy; 2020 Architect UI Template
+                                    </div>
                                 </div>
                                 <div class="app-footer-right">
-                                    <ul class="nav">
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0);" class="nav-link">
-                                                Footer Link 3
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0);" class="nav-link">
-                                                <div class="badge badge-success mr-1 ml-0">
-                                                    <small>NEW</small>
-                                                </div>
-                                                Footer Link 4
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <b>&copy; 2020 BalimOOn Liqueurs</b>
                                 </div>
                             </div>
                         </div>
@@ -663,7 +1281,7 @@
                     </span>
                 </div>
 
-                <div class="app-header__content" >
+                <div class="app-header__content">
                     <div class="app-header-left">
                         <ul class="header-menu nav">
                             <!--Untuk Header Menu-->
@@ -674,33 +1292,14 @@
                     <!--Header Right-->
                     <div class="app-header-right ">
                         <ul class="header-menu nav">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
 
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><h5>Hello @User.Identity.Name!</h5></a>
-                                </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Register"><h5>Register</h5></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login"><h5>Login</h5></a>
+                            </li>
 
-                                <li class="nav-item">
-
-                                    <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                                        <button type="submit" class="nav-link btn btn-link mobile-toggle-nav">
-                                            <h5>Logout</h5>
-                                        </button>
-                                    </form>
-
-                                </li>
-
-                            }
-                            else
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Register"><h5>Register</h5></a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Identity" asp-page="/Account/Login"><h5>Login</h5></a>
-                                </li>
-                            }
                         </ul>
                     </div>
                     <!--AkhirHeader Right-->
@@ -871,69 +1470,45 @@
                         </div>
                     </div>
 
+                   
                     <!-- Awal Footer-->
                     <div class="app-wrapper-footer">
                         <div class="app-footer">
                             <div class="app-footer__inner">
                                 <div class="app-footer-left">
-                                    <ul class="nav">
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0);" class="nav-link">
-                                                Footer Link 1
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0);" class="nav-link">
-                                                Footer Link 2
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <div>
+                                        &copy; 2020 Architect UI Template
+                                    </div>
                                 </div>
                                 <div class="app-footer-right">
-                                    <ul class="nav">
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0);" class="nav-link">
-                                                Footer Link 3
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a href="javascript:void(0);" class="nav-link">
-                                                <div class="badge badge-success mr-1 ml-0">
-                                                    <small>NEW</small>
-                                                </div>
-                                                Footer Link 4
-                                            </a>
-                                        </li>
-                                    </ul>
+                                    <b>&copy; 2020 BalimOOn Liqueurs</b>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--Akhir Footer-->
+                    
                 </div>
             </div>
         </div>
 
     }
     <!--Akhir Main Body-->
-    </div>
     <!--Untuk Java Script-->
+    <script type="text/javascript" src="~/lib/Adminlte/plugins/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="~/js/jquery-validate.min.js"></script>
+    <script src="~/lib/Adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/lib/assets/scripts/main.js"></script>
-    <script type="text/javascript" src="~/lib/Adminlte/plugins/jquery/jquery.min.js"></script>
-    <script src="~/lib/Adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="~/lib/momentjs/moment.min.js"></script>
     <script type="text/javascript" src="~/lib/Adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" src="~/lib/Adminlte/plugins/datatables/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
     <script type="text/javascript" src="~/lib/Adminlte/dist/js/adminlte.min.js"></script>
     <script type="text/javascript" src="~/lib/Adminlte/dist/js/demo.js"></script>
+    <script type="text/javascript" src="~/lib/Chosen/chosen.jquery.js"></script>
+    <script type="text/javascript" src="~/lib/datetime-moment/datetime-moment.js"></script>
 
-    <script>
-        $(function () {
-            $("#tabel1").DataTable();
-            $("#tabel2").DataTable();
-            $("#tabel3").DataTable();
-        });
-    </script>
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

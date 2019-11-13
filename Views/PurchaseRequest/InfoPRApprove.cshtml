@@ -1,0 +1,587 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.PurchaseRequestVM
+@{
+    ViewData["Title"] = "InfoPRApprove";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>BalimOOn Liqueurs - Detil PR To Approve</h3>
+
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">Detil @ViewBag.PRNO</h4>
+                </div>
+                <div class="card-body">
+                    <form id="form-data" role="form">
+                        
+                        <div class="form-group">
+                            @Html.HiddenFor(a => a.HeaderTbl.RequisitionHeaderId)
+                            <input asp-for="HeaderTbl.RequisitionHeaderId" id="RequisitionHeaderId" class="form-control" disabled hidden />
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>PR Number</label>
+                                <input asp-for="HeaderTbl.RequisitionNo" id="RequisitionNo" class="form-control" disabled />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Status</label>
+                                <select asp-for="HeaderTbl.Status" id="Status" class="form-control" asp-items="@ViewBag.ListOfStatus" disabled></select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Requester</label>
+                                <input asp-for="HeaderTbl.RequesterId" id="Requester" class="form-control" disabled />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Department</label>
+                                <input asp-for="HeaderTbl.ShortcutDimension1Code" id="Department" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Order Date</label>
+                                <input asp-for="HeaderTbl.OrderDate" id="order" type="datetime-local" class="form-control" disabled />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Due Date</label>
+                                <input asp-for="HeaderTbl.DueDate" id="due" type="datetime-local" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Priority</label>
+                                <select asp-for="HeaderTbl.Priority" id="Priority" class="form-control" asp-items="@ViewBag.ListOf123" disabled></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <br />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">Item in @ViewBag.PRNO</h4>
+                </div>
+                <div class="card-body">
+                    <table id="tabel-6" class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>No</th>
+                                <th>Record Type</th>
+                                <th>Description</th>
+                                <th>Qty</th>
+                                <th>UoM</th>
+                                <th>Item Category</th>
+                                <th>Unit Cost</th>
+                                <th>Amount</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="7" style="text-align:right">Total:</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">Action</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card-shadow-info mb-3 widget-chart widget-chart2 text-left card">
+                                <div class="widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <button type="button" class="btn btn-block" id="button_approve">
+                                                <div class="widget-content-left pr-2 fsize-1">
+                                                    <div class="widget-numbers mt-0 fsize-3 text-primary"><i class="fa fa-thumbs-up"></i></div>
+                                                </div>
+                                                <div class="widget-content-right w-100">
+                                                    Approve
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card-shadow-info mb-3 widget-chart widget-chart2 text-left card">
+                                <div class="widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <button type="button" class="btn btn-block" id="button_reject">
+                                                <div class="widget-content-left pr-2 fsize-1">
+                                                    <div class="widget-numbers mt-0 fsize-3 text-warning"><i class="fa fa-thumbs-down"></i></div>
+                                                </div>
+                                                <div class="widget-content-right w-100">
+                                                    Reject
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card-shadow-info mb-3 widget-chart widget-chart2 text-left card">
+                                <div class="widget-content">
+                                    <div class="widget-content-outer">
+                                        <div class="widget-content-wrapper">
+                                            <button type="button" class="btn btn-block" id="button_cancell">
+                                                <div class="widget-content-left pr-2 fsize-1">
+                                                    <div class="widget-numbers mt-0 fsize-3 text-danger"><i class="fa fa-ban"></i></div>
+                                                </div>
+                                                <div class="widget-content-right w-100">
+                                                    Cancel
+                                                </div>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-danger btn-block" id="back"><span class="fa fa-arrow-circle-left"> Back</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts{
+<script type="text/javascript" src="~/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var PRID = document.getElementById('RequisitionHeaderId').value
+        $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+        $.fn.dataTable.moment("DD/MM/YYYY");
+        $("#tabel-6").DataTable({
+            //Design Layout
+            responsive: true,
+            stateSave: true,
+            autoWidth: true,
+            destroy: true,
+            scrollX: true,
+            fixedColumns: true,
+
+            //server side
+            processing: true,
+            serverSide: true,
+
+            //Paging Setup
+            paging: true,
+
+            //searching Setup
+            searching: { regex: true },
+
+            //ajax Filter
+            ajax: {
+                url: "/PurchaseRequest/TabelPRList?PRID=" + PRID,
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+
+            //column definition
+            columnDefs: [
+                { targets: "no-sort", orderable: false },
+                { targets: "no-search", searchable: false },
+                {
+                    targets: "trim",
+                    render: function (data, type, full, meta) {
+                        if (type === "display") {
+                            data = strtrunc(data, 10);
+                        }
+                        return data;
+                    }
+                },
+                { targets: "data-type", type: "date-eu" }
+            ],
+            columns: [
+                { data: "LineID", isIdentity: true, visible: false },
+                { data: "SeqLineNo" },
+                { data: "recordtype" },
+                { data: "description" },
+                { data: "qty" },
+                { data: "UoM" },
+                { data: "itemcat" },
+                { data: "UnitCost", render: $.fn.dataTable.render.number(',', '.', 2) },
+                { data: "Amount", render: $.fn.dataTable.render.number(',', '.', 2) },
+                {
+                    render: function (data, type, full, meta) {
+                        return "<a href='#' onclick='View(\"" + full.LineID + "\")' class='btn btn-outline-info btn-block'><span class='fa fa-eye'> </span></a>";
+                    }
+                }
+            ],
+            "footerCallback": function ( row, data, start, end, display ) {
+                var api = this.api(), data;
+                var numFormat = $.fn.dataTable.render.number('\,', '.', 2).display;
+
+                // Remove the formatting to get integer data for summation
+                var intVal = function ( i ) {
+                    return typeof i === 'string' ?
+                    i.replace(/[\$,]/g, '')*1 :
+                    typeof i === 'number' ?
+                    i : 0;
+                };
+ 
+                // Total over all pages
+                total = api
+                .column( 8 )
+                .data()
+                .reduce( function (a, b) {
+                    return intVal(a) + intVal(b);
+                }, 0 );
+
+                // Update footer
+                $( api.column( 7 ).footer() ).html(
+                    numFormat(total)
+                 );
+            }
+               
+        })
+    })
+
+</script>
+<script>
+    $("#back").click(function () {
+        Swal.fire({
+            title: 'Back',
+            text: 'Are You Sure Want To Go Back To PR Approve List?',
+            type: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#002afc',
+            cancelButtonColor: '#fc0303',
+            confirmButtonText: 'Go Back'
+        }).then((result) => {
+            if (result.value) {
+                window.location.href = "/PurchaseRequest/ApprovePR";
+            }
+        })
+    })
+</script>
+<script>
+    function View(LineID) {
+        var link = "/PurchaseRequest/ModalDetailPR?LineID=" + LineID;
+        $("#MyModal").modal();
+        $.ajax({
+            type: "GET",
+            url: link,
+            success: function (data) {
+                var hasil = JSON.parse(data);
+                $("#LineId").val(hasil.LineID);
+                $("#seqlineno").text(hasil.SeqLineNo);
+                $("#RecordType").text(hasil.RecordType);
+                $("#recordNo").text(hasil.recordNo);
+                $("#Description").text(hasil.Description);
+                $("#CatCode").text(hasil.CatCode);
+                $("#UoM").text(hasil.UoM);
+                $("#qty").text(hasil.qty);
+                $("#cost").text(hasil.Cost);
+                $("#amount").text(hasil.Amount);
+                $("#judul-modal").html("Detil " + hasil.PRNO + " Line " + hasil.SeqLineNo);
+                var imagesrc = "/Images/PRImages/default.jpg"
+                if (hasil.picture != null) {
+                    imagesrc = "/Images/PRImages/"+ obj.picture;
+                }
+                $("#gambar").attr("src", imagesrc);
+                $("#gambar-link").attr("href", imagesrc);
+            }
+        })
+    }
+</script>
+<script>
+    $("#button_approve").click(function () {
+        var PRNO = document.getElementById('RequisitionNo').value;
+        swal.fire({
+            title: 'Approve This PR?',
+            text: 'Are You Sure Want To Approve ' + PRNO + ' ?',
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#002afc',
+            cancelButtonColor: '#fc0303',
+            confirmButtonText: 'Approve',
+            cancelButtonText: 'No, Cancel'
+        }).then((result) => {
+            if (result.value) {
+                var form = $("#form-data").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/PurchaseRequest/ApprovePRApprove",
+                    data: form,
+                    async: "true",
+                    success: function (result) {
+                        if (result == "Sukses") {
+                            Swal.fire(
+                                'Approved!',
+                                'The PR Has Been Approved!!',
+                                'success'
+                            ).then((result) => {
+                                window.location.href = "/PurchaseRequest/ApprovePR";
+                            })
+                        }
+                        else {
+                             Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                                footer: ''+result
+                            })
+                        }
+
+                    }
+                })
+            }
+        })
+    })
+</script>
+<script>
+    $("#button_reject").click(function () {
+        var PRID = document.getElementById('RequisitionHeaderId').value;
+        var link = "/PurchaseRequest/ApprovePRView?RequisitionHeaderId=" + PRID;
+        $("#ModalReject").modal();
+        $.ajax({
+            type: "GET",
+            url: link,
+            success: function (hasil) {
+                var object = JSON.parse(hasil);
+                $("#RequisitionHeaaderIdReject").val(object.RequisitionHeaderId);
+                $("#judul_modal_reject").html("Reject " + object.RequisitionNo);
+            }
+        })
+    })
+</script>
+<script>
+    $(function () {
+        $("#ModalReject form").validate({
+            rules: {
+                RejectMessage: {
+                    required: true
+                }
+            },
+            submitHandler: function (form) {
+                var PRNO = document.getElementById('RequisitionNo').value;
+                Swal.fire({
+                    title: 'Reject PR',
+                    text: 'Are You Sure Want To Reject '+PRNO+' ?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#002afc',
+                    cancelButtonColor: '#fc0303',
+                    confirmButtonText: 'Reject',
+                    cancelButtonText: 'No, Cancel'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            type: "POST",
+                            url: "/PurchaseRequest/ApprovePRRejected",
+                            data: $(form).serialize(),
+                            async: "true",
+                            success: function (result) {
+                               if (result == "Sukses") {
+                                  Swal.fire(
+                                        'Rejected!',
+                                        ''+PRNO+' has been rejected',
+                                        'success'
+                                    ).then((result) => {
+                                        window.location.href = "/PurchaseRequest/ApprovePR";
+                                    })
+                               }
+                               else {
+                                   Swal.fire({
+                                        type: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!',
+                                        footer: ''+result
+                                   })
+                               }
+                            }
+                       })
+                    }
+                })
+            }
+        })
+    })
+</script>
+<script>
+    $("#button_cancell").click(function () {
+        var PRNO = document.getElementById('RequisitionNo').value;
+        swal.fire({
+            title: 'Cancel PR',
+            text: 'Are You Sure Want To Cancel ' + PRNO + ' ?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#002afc',
+            cancelButtonColor: '#fc0303',
+            confirmButtonText: '<i class="fa fa-ban"></i>Yes, Cancel',
+            cancelButtonText: '<i clas="fa fa-window-close"></i>  No'
+        }).then((result) => {
+            if (result.value) {
+                var form = $("#form-data").serialize();
+                $.ajax({
+                    type: "POST",
+                    url: "/PurchaseRequest/ApprovePRCancelled",
+                    data: form,
+                    async: "true",
+                    success: function (result) {
+                        if (result == "Sukses") {
+                             Swal.fire(
+                                'Cancelled!',
+                                ''+PRNO+' Has Been Cancelled!!',
+                                'success'
+                            ).then((result) => {
+                                window.location.href = "/PurchaseRequest/ApprovePR";
+                            })
+                        }
+                        else {
+                           Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                                footer: ''+result
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>
+ }
+
+@section Styles{
+    <link rel="stylesheet" href="~/lib/fancybox/dist/jquery.fancybox.min.css" />
+
+<div class="modal fade" id="MyModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="judul-modal"></h4>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <form id="modal-form" role="form">
+                    <fieldset id="submit-modal">
+                        @Html.HiddenFor(a=>a.LineTbl.RequisitionLineId, new { @id="LineId"})
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <table id="tabel-detail" border="0" style="width:100%; position:relative; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size:15px;">
+                                    <tr>
+                                        <td style="width:35%">Line No</td>
+                                        <td style="width:5%">:</td>
+                                        <td style="width:60%; padding-left:10px"><span id="seqlineno"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Record Type</td>
+                                        <td>:</td>
+                                        <td style="padding-left:10px"><span id="RecordType"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Item Category</td>
+                                        <td>:</td>
+                                        <td style="padding-left:10px"><span id="CatCode"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Record Name</td>
+                                        <td>:</td>
+                                        <td style="padding-left:10px"><span id="recordNo"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Description</td>
+                                        <td>:</td>
+                                        <td style="padding-left:10px"><span id="Description"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>unit of Measure</td>
+                                        <td>:</td>
+                                        <td style="padding-left:10px"><span id="UoM"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Quantity</td>
+                                        <td>:</td>
+                                        <td style="padding-left:10px"><span id="qty"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Unit Cost</td>
+                                        <td>:</td>
+                                        <td style="padding-left:10px"><span id="cost"></span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Amount</td>
+                                        <td>:</td>
+                                        <td style="padding-left:10px"><span id="amount"></span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <span class="fa fa-image"> Image on PR</span><br />
+                                <a id="gambar-link" data-fancybox data-caption="Image on this PR">
+                                    <img id="gambar" alt="Item Image" style="width:300px; border-radius:5%" title="Item Image"/>
+                                </a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Untuk Reject-->
+<div class="modal fade" id="ModalReject">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="judul_modal_reject"></h4>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <form id="modal_form_reject" role="form">
+                    @Html.HiddenFor(a => a.HeaderTbl.RequisitionHeaderId, new { @id = "RequisitionHeaaderIdReject" })
+                    <div class="form-group">
+                        <label>Rejected Message<span class="text-danger">*</span></label>
+                        @Html.TextAreaFor(a => a.ApprovalEntry.Message, new { @id = "RejectMessage", @class = "form-control", @placeholder = "Type Your Message Here", @required = "required" })
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="Button_Reject_Process"><span class="fa fa-ban"> Reject</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+}

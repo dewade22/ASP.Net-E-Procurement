@@ -1,0 +1,279 @@
+﻿@model Balimoon_E_Procurement.Models.VendorUserRoleVM
+@{
+    ViewData["Title"] = "VendorData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<h2>Vendor Data</h2><br />
+
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h3 class="card-title">List of Vendor Data</h3>
+                </div>
+                <div class="card-body">
+                    <table id="tabel6" class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    User Id
+                                </th>
+                                <th>
+                                    Username
+                                </th>
+                                <th>
+                                    Company Name
+                                </th>
+                                <th>
+                                    Company Address
+                                </th>
+                                <th>
+                                    Phone Number
+                                </th>
+
+                                <th>
+                                    Confirm?
+                                </th>
+                                <th>
+                                    Details
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="SetUserList"></tbody>
+                    </table>
+                    <h4 class="text-danger">If Confirm Row Value = Not Confirmed, Please Give The Role to The User First, in Manage User Role.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles{
+    <div class="modal fade bd-example-modal-lg" id="MyLargeModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="ModalTitle"></h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form">
+                        <fieldset id="SubmitForm">
+                            @Html.HiddenFor(a => a.usertbl.Id, new { @id = "Id" })
+                            <div class="form-group">
+                                <label>Username</label>
+                                @Html.TextBoxFor(a => a.usertbl.UserName, new { @id = "UserName", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Vendor Name</label>
+                                @Html.TextBoxFor(a => a.vendortbl.CompanyName, new { @id = "CompanyName", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Vendor Address</label>
+                                @Html.TextBoxFor(a => a.vendortbl.Address, new { @id = "Address", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>NPWP Number</label>
+                                @Html.TextBoxFor(a => a.vendortbl.NpwpNo, new { @id = "NpwpNo", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>SIUP Number</label>
+                                @Html.TextBoxFor(a => a.vendortbl.SiupNo, new { @id = "SiupNo", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>E-Mail</label>
+                                @Html.TextBoxFor(a => a.usertbl.Email, new { @id = "Email", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>E-Mail Confirmed?</label>
+                                @Html.TextBoxFor(a => a.usertbl.EmailConfirmed, new { @id = "EmailConfirmed", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                @Html.TextBoxFor(a => a.usertbl.PhoneNumber, new { @id = "PhoneNumber", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Sales Name</label>
+                                @Html.TextBoxFor(a => a.vendortbl.ContactName, new { @id = "SalesName", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Sales E-Mail</label>
+                                @Html.TextBoxFor(a => a.vendortbl.ContactEmail, new { @id = "SalesEmail", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Sales Contact</label>
+                                @Html.TextBoxFor(a => a.vendortbl.Contact, new { @id = "SalesContact", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Invoice to Name</label>
+                                @Html.TextBoxFor(a => a.vendortbl.InvoiceName, new { @id = "InvoiceName", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Invoice to E-Mail</label>
+                                @Html.TextBoxFor(a => a.vendortbl.InvoiceEmail, new { @id = "InvoiceEmail", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Invoice to Contact</label>
+                                @Html.TextBoxFor(a => a.vendortbl.InvoiceContact, new { @id = "InvoiceContact", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Roles</label>
+                                @Html.TextBoxFor(a => a.roletbl.Name, new { @id = "RoleName", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="Download"><span class="pe-7s-cloud-download"> Download</span></button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+@section Scripts{
+<script>
+    //Get Vendor Data Passing to Form
+
+    $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+    $.fn.dataTable.moment("DD/MM/YYYY");
+    $("#tabel6").DataTable({
+        //Design Layout
+        stateSave: true,
+        autoWidth: true,
+        scrollX: true,
+        scrollY: false,
+
+
+        //ServerSide
+        processing: true,
+        serverSide: true,
+
+        //Paging Setup
+        paging: true,
+
+        //searching Setup
+        searching: { regex: true },
+
+        //ajax Filter
+        ajax: {
+            url: "/Users/GetVendorList",
+            //"dataSrc": '',
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: function (d) {
+                return JSON.stringify(d);
+            }
+        },
+
+        //column definition
+        columnDefs: [
+            {
+                targets: [0],
+                searchable: false,
+                visible: false
+            },
+            { targets: "no-sort", orderable: false },
+            { targets: "no-search", searchable: false },
+            {
+                targets: "trim",
+                render: function (data, type, full, meta) {
+                    if (type === "display") {
+                        data = strtrunc(data, 10);
+                    }
+                    return data;
+                }
+            },
+            { targets: "data-type", type: "date-eu" }
+        ],
+
+        columns: [
+                { data:"Id", name:"Id", isIdentity: true, visible: false},
+                { data: "UserName", name: "UserName"},
+                { data: "CompanyName", name: "CompanyName" },
+                { data: "Address", name: "Address" },
+                { data: "PhoneNumber", name: "PhoneNumber" },
+                {
+                    data: "RoleId",
+                    render: function (data, type, row) {
+                        if (data === '00100') {
+                            data = "Confirmed"
+                        }
+                        else {
+                            data = "Not Confirmed"
+                        }
+                        return data;
+                    }
+                },
+                {
+                    render: function (data, type, full, meta) {
+                        return "<a href='#' onclick='UserRecordDetails(\"" + full.Id+ "\")' class='btn btn-outline-info btn-block'><span class='pe-7s-info'></span></a>";
+                    }
+                   
+                }
+
+        ]
+    })
+    $(".dataTables_scrollHeadInner").css({"width":"100%"});
+    $(".table ").css({"width":"100%"});
+
+    //Get Vendor to Passing Into Modal
+     function UserRecordDetails(Id) {
+            var url = "/Users/GetVendorById?Id=" + Id;
+            $("#ModalTitle").html("Vendor Details");
+            $("#MyLargeModal").modal();
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#Id").val(obj.Id);
+                    $("#UserName").val(obj.UserName);
+                    $("#Email").val(obj.Email);
+                    $("#EmailConfirmed").val(obj.EmailConfirmed);
+                    $("#PhoneNumber").val(obj.PhoneNumber);
+                    $("#NpwpNo").val(obj.NpwpNo);
+                    $("#SiupNo").val(obj.SiupNo);
+                    $("#CompanyName").val(obj.CompanyName);
+                    $("#Address").val(obj.Address);
+                    $("#SalesName").val(obj.SalesName);
+                    $("#SalesContact").val(obj.SalesContact);
+                    $("#SalesEmail").val(obj.SalesEmail);
+                    $("#InvoiceName").val(obj.InvoiceName);
+                    $("#InvoiceContact").val(obj.InvoiceContact);
+                    $("#InvoiceEmail").val(obj.InvoiceEmail);
+                    $("#RoleName").val(obj.RoleName);
+                }
+            })
+     }
+   
+   //To Download File
+    
+     $("#Download").click(function () {
+         var id = document.getElementById('Id').value;
+         Swal.fire({
+             title: 'Download Data',
+             text: 'Download The Vendor Data?',
+             type: 'info',
+             showCancelButton: true,
+             confirmButtonColor: '#002afc',
+             cancelButtonColor: '#fc2626',
+             confirmButtonText: 'Download!'
+         }).then((result) => {
+             if (result.value) {
+                 window.location.href = "/VendorData/Download?id=" + id;
+             }
+         })
+     })
+    
+</script>
+}

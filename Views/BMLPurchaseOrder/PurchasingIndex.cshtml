@@ -1,0 +1,109 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.BMLPurchaseOrderVM
+@{
+    ViewData["Title"] = "PR Ready Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BalimOOn Liqueurs</h2>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h3 class="card-title">PR Ready To Create</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-warning" id="MySimpleTable">
+                        <thead>
+                            <tr>
+                                <th>PR ID</th>
+                                <th>PR No.</th>
+                                <th>Requester</th>
+                                <th>Department</th>
+                                <th>Order Date</th>
+                                <th>Notes</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+<script>
+    $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+    $.fn.dataTable.moment("DD/MM/YYYY");
+    $("#MySimpleTable").DataTable({
+        //Design
+        stateSave: true,
+        autoWidth: true,
+        scrollX:true,
+
+        //serverside
+        processing: true,
+        serverSide: true,
+
+        //Paging Setup
+        paging: true,
+
+        //searching Setup
+        searching: { regex: true },
+
+        //ajax
+        ajax: {
+            url: "/BMLPurchaseOrder/GetPRReadyPO",
+            type: "POST",
+            contentType: "application/json",
+            dataType: "json",
+            data: function (d) {
+                return JSON.stringify(d);
+            }
+        },
+         //column definition
+        columnDefs: [
+            { targets: "no-sort", orderable: false },
+            { targets: "no-search", searchable: false },
+            {
+                targets: "trim",
+                render: function (data, type, full, meta) {
+                    if (type === "display") {
+                        data = strtrunc(data, 10);
+                    }
+                    return data;
+                }
+            },
+            { targets: "data-type", type: "date-eu" }
+        ],
+        columns: [
+            { data: "PRID", isIdentity: true, visible: false },
+            { data: "PRNo" },
+            { data: "Requester" },
+            { data: "Departement" },
+            {
+                data: "OrderDate", render: function(data, type) {
+                    if (type === "display" || type === "filter") {
+                        return moment(data).format("ddd, DD-MM-YYYY");
+                    }
+                    return data;
+                }
+            },
+            { data: "Notes" },
+            {
+                render: function (data, type, full, meta) {
+                    return "<a href='#' onclick='Show(\"" + full.PRID + "\")' class='btn btn-outline-info'><span class='pe-7s-info'> Details</span></a>";
+                }
+            }
+        ]
+    })
+    $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+    $(".table ").css({ "width": "100%" });
+</script>
+    <script>
+        function Show(PRID) {
+            window.location.href = "/BMLPurchaseOrder/DetilPROK?PRID=" + PRID;
+        }
+    </script>
+ }

@@ -1,0 +1,639 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.PurchaseRequestVM
+@{
+    ViewData["Title"] = "Edit Line";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>BalimOOn Liqueurs -  Add PR</h2>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h3 class="card-title">Edit PR Line @ViewBag.PRNO</h3>
+                </div>
+                <div class="card-body">
+                    <form id="formBody">
+                        <fieldset id="BodyFormValue">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                @Html.HiddenFor(a=>a.HeaderTbl.RequisitionHeaderId, new { @id="RequisitionHeaderId"})
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label asp-for="HeaderTbl.RequisitionNo">PR No.</label>
+                                    <input asp-for="HeaderTbl.RequisitionNo" id="RequisitionNo" class="form-control" disabled />
+                                    <span asp-validation-for="HeaderTbl.RequisitionNo" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="HeaderTbl.RequesterId">Requester</label>
+                                    <input asp-for="HeaderTbl.RequesterId" class="form-control" disabled />
+                                    <span asp-validation-for="HeaderTbl.RequesterId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Order Date</label>
+                                    <input asp-for="HeaderTbl.OrderDate" id="orderDate" class="form-control" disabled />
+                                    <span asp-validation-for="HeaderTbl.OrderDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Due Date</label>
+                                    <input asp-for="HeaderTbl.DueDate" id="dueDate" class="form-control" disabled />
+                                    <span asp-validation-for="HeaderTbl.DueDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                            <hr />
+                            <br />
+                            <br />
+                           <a href="#" data-toggle="modal" class="btn btn-primary" data-target="#ModalAddNew"><span class="fa fa-plus-circle"></span> Add New</a>
+                            <br />
+                            <br />
+                            <div class="text-primary" id="judul_tabel"><h5>List of Items</h5></div>
+                            <table id="tabel5" class="table table-warning">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>No</th>
+                                        <th>Item Name</th>
+                                        <th>Description</th>
+                                        <th>UoM</th>
+                                        <th>Qty</th>
+                                        <th>Cost</th>
+                                        <th>Amount</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th colspan="6" style="text-align:right">Total:</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </fieldset>
+                    </form>
+                    <br /><br /><br />
+                    <div class="form-row">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-6">
+                            <button type="button" id="SendToApproval" class="btn btn-block btn-primary"><span class="fa fa-paper-plane"></span> Send To Approval</button>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button type="button" id="back" class="btn btn-block btn-outline-danger"><span class="fa fa-arrow-alt-circle-left"></span> Back</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script src="~/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script>
+        //Untuk Style saat Form Load
+        $(document).ready(function () {
+            
+            var RequisitionNo = document.getElementById('RequisitionNo').value;
+            $("#tabel5").DataTable({
+                //Design Layout
+                stateSave: true,
+                autoWidth: true,
+                destroy: true,
+                scrollX: true,
+
+                //server side
+                processing: true,
+                serverSide: true,
+
+                //Paging Setup
+                paging: true,
+
+                //searching Setup
+                searching: { regex: true },
+
+                //ajax Filter
+                ajax: {
+                    url: "/PurchaseRequest/testing?RequisitionNo=" + RequisitionNo,
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+
+                //column definition
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+                            return data;
+                        }
+                    },
+                    { targets: "data-type", type: "date-eu" }
+                ],
+
+                columns: [
+                    { data: "RequisitionLineId", isIdentity: true, visible: false },
+                    { data: "SeqLineNo" },
+                    { data: "ItemName" },
+                    { data: "Description" },
+                    { data: "UnitOfMeasure" },
+                    { data: "Quantity" },
+                    { data: "UnitCost" },
+                    { data: "Amount" },
+                    {
+                        render: function (data, type, full, meta) {
+                            return "<a href='#' onclick='EditRecord(\"" + full.RequisitionLineId + "\")' class='btn btn-outline-info'><span class='fa fa-edit'></span></a>";
+                        }
+                    },
+                     {
+                        render: function (data, type, full, meta) {
+                            return "<a href='#' onclick='DeleteRecord(\"" + full.RequisitionLineId + "\")' class='btn btn-outline-danger'><span class='fa fa-trash-alt'></span></a>";
+                        }
+                    }
+                ],
+                 "footerCallback": function ( row, data, start, end, display ) {
+                     var api = this.api(), data;
+                     var numFormat = $.fn.dataTable.render.number('\,', '.', 2).display;
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function ( i ) {
+                        return typeof i === 'string' ?
+                        i.replace(/[\$,]/g, '')*1 :
+                        typeof i === 'number' ?
+                        i : 0;
+                    };
+ 
+                    // Total over all pages
+                    total = api
+                    .column( 7 )
+                    .data()
+                    .reduce( function (a, b) {
+                        return intVal(a) + intVal(b);
+                    }, 0 );
+
+                    // Update footer
+                    $( api.column( 6 ).footer() ).html(
+                        numFormat(total)
+                    );
+                 }
+            })
+            $(".dataTables_scrollHeadInner").css({ "width": "100%" });
+            $(".table ").css({ "width": "100%" });
+            //Dinamis description di form add line
+             $('#AddRecordNo').on('change', function() {
+                 $('#AddDescription').val($("#AddRecordNo option:selected").text());
+             });
+            //dinamis description di form edit line
+            $('#RecordNo').on('change', function () {
+                $('#Description').val($('#RecordNo option:selected').text());
+            });
+
+            // dinamis select list UoM Add
+            $('#AddRecordNo').on('change', function () {
+                var recNo = $('#AddRecordNo').val();
+                var link = "/PurchaseRequest/GetDynamicUOM?id="+recNo;
+                $.ajax({
+                    type: "GET",
+                    url: link,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        $("#AddUOM").val(obj.UoM);
+                        $("#AddUOM").trigger("chosen:updated");
+                        $("#AddHarga").val(obj.UnitCost);
+                        
+                    }
+                })
+            })
+            //dynamic select list UoM Edited
+            $('#RecordNo').on('change', function () {
+                var recNo = $('#RecordNo').val();
+                var link = "/PurchaseRequest/GetDynamicUOM?id="+recNo;
+                $.ajax({
+                    type: "GET",
+                    url: link,
+                    success: function (data) {
+                        var obj = JSON.parse(data);
+                        $("#UOM").val(obj.UoM);
+                        $("#UOM").trigger("chosen:updated");
+                        $("#UnitPrice").val(obj.UnitCost);
+                    }
+                })
+            })
+        })
+    </script>
+    
+
+    <script>
+        $("#back").click(function () {
+            window.location.href = "/PurchaseRequest/AddPR"
+        })
+    </script>
+<script>
+    function EditRecord(RequisitionLineId) {
+        var url = "/PurchaseRequest/EditLineReject?RequisitionLineId=" + RequisitionLineId;
+        $("#ExampleModalLongTitle").html("Edit Item");
+        $('#ModalEdit').modal();
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $("#SeqLineNo").val(obj.SeqLineNo);
+                $("#RequisitionLineID").val(obj.RequisitionLineId);
+                $("#RecordType").val(obj.RecordType); // Chosen Select List
+                $("#RecordType").trigger("chosen:updated"); // Chosen Select List
+                $("#RecordNo").val(obj.RecordNo);
+                $("#RecordNo").trigger("chosen:updated");
+                $("#Description").val(obj.Description);
+                $("#Quantity").val(obj.Quantity);
+                $("#UOM").val(obj.UnitofMeasure);
+                $("#UOM").trigger("chosen:updated");
+                $("#UnitPrice").val(obj.UnitCost);
+                $("#Vendors").val(obj.VendorNo);
+                $("#Vendors").trigger("chosen:updated");
+                $("#RequestNotes").val(obj.RequestNotes);
+                var imagesrc = "/Images/PRImages/default.jpg";
+                if (obj.Picture != null) {
+                    imagesrc = "/Images/PRImages/" + obj.Picture;
+                    $("#gambar-link").attr("href", imagesrc);
+                    $("#gambar").attr("src", imagesrc);
+                }
+                else {
+                    $("#gambar-link").attr("href", imagesrc);
+                    $("#gambar").attr("src", imagesrc);
+                }
+            }
+        })
+    }
+</script>
+
+<script>
+    function DeleteRecord(RequisitionLineId) {
+        var reqNo = document.getElementById('RequisitionNo').value;
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "/PurchaseRequest/DisposeLine?RequisitionLineId=" + RequisitionLineId,
+                    success: function (result) {
+                        if (result == "Sukses") {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            ).then((result) => {
+                                window.location.href = "/PurchaseRequest/EditLineSubmit?RequisitionNo=" + reqNo;
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                                footer: 'Failed To Delete Item'
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    }
+</script>
+
+<script>
+    //Untuk Chosen
+    $("#RecordType").chosen();
+    $("#RecordNo").chosen();
+    $("#UOM").chosen();
+    $("#Vendors").chosen();
+    $("#AddVendor").chosen();
+    $("#AddRecordType").chosen();
+    $("#AddRecordNo").chosen();
+    $("#AddUOM").chosen();
+    $('.chosen-container').css('width', '100%');
+</script>
+<script>
+    $("#ModalAddNew form").validate({
+        rules: {
+            AddRecordType: {
+                required: true
+            }
+        },
+        submitHandler: function (form) {
+            var namaPR = document.getElementById('RequisitionNo').value;
+            Swal.fire({
+                title: 'Add New Items',
+                text: 'Are You Sure Want To Add New Item in '+namaPR+' ?',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#002afc',
+                cancelButtonColor: '#fc0303',
+                confirmButtonText: 'Add'
+            }).then((result) => {
+                if (result.value) {
+                    var formData = new FormData($(form)[0]);
+                     $.ajax({
+                        type: "POST",
+                        url: "/PurchaseRequest/AddingLine",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (result) {
+                                if (result == "Sukses") {
+                                    Swal.fire(
+                                        'Added!',
+                                        'Your file has been saved.',
+                                        'success'
+                                    ).then((result) => {
+                                        window.location.href = "/PurchaseRequest/EditLineSubmit?RequisitionNo="+namaPR;
+                                        $("#ModalAddNew").modal("hide");
+                                    })
+                                }
+                                else {
+                                    Swal.fire({
+                                        type: 'error',
+                                        title: 'Oops...',
+                                        text: 'Something went wrong!',
+                                        footer: ''+result
+                                    })
+                                }
+                            }
+                     })
+                }
+            })
+        }
+    })
+
+</script>
+<script>
+    $("#ModalEdit form").validate({
+        rules: {
+            RequisitionLineID: {
+                required: true
+            }
+        },
+        submitHandler: function (form) {
+            var namaPR = document.getElementById('RequisitionNo').value;
+            var LineNo = document.getElementById('SeqLineNo').value;
+            var LineId = document.getElementById('RequisitionLineID').value;
+            Swal.fire({
+                title: 'Edit PR',
+                text: 'Are You Sure Want To Update New Item in ' + namaPR + ', No. '+LineNo+' ?',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#002afc',
+                cancelButtonColor: '#fc0303',
+                confirmButtonText: 'Edit'
+            }).then((result) => {
+                if (result.value) {
+                    //EditLineProcess
+                    var formData = new FormData($(form)[0]);
+                    $.ajax({
+                        type: "POST",
+                        url: "/PurchaseRequest/EditLineProcess",
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function (result) {
+                            if (result == "Sukses") {
+                                Swal.fire(
+                                    'Saved!',
+                                    'Your file has been saved.',
+                                    'success'
+                                ).then((result) => {
+                                    window.location.href = "/PurchaseRequest/EditLineSubmit?RequisitionNo=" + namaPR;
+                                    $("#ModalEdit").modal("hide");
+                                })
+                            }
+                            else {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: 'Something went wrong!',
+                                    footer: ''+result
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        }
+    })
+</script>
+<script>
+    $("#SendToApproval").click(function () {
+        Swal.fire({
+            title: 'Send To Approval?',
+            text: "You want to Send This PR into Approval?",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: '<i class="fa fa-paper-plane"></i> Send!',
+            cancelButtonText: '<i class="fa fa-ban"></i> Cancel'
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "/PurchaseRequest/SavePROpen",
+                    data: $("#BodyFormValue").serialize(),
+                    success: function (result) {
+                        if (result == "Sukses") {
+                            Swal.fire(
+                                'Send!',
+                                'Your PR Has Been Sent',
+                                'success'
+                            ).then((result) => {
+                                window.location.href = "/PurchaseRequest/AddPR";
+                            })
+                        }
+                        else {
+                            Swal.fire({
+                                type: 'error',
+                                title: 'Oops...',
+                                text: 'Something went wrong!',
+                                footer: ''+result
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    })
+</script>
+<script>
+     $("#gambar-link").fancybox({
+       
+    });
+</script>
+}
+
+@section Styles{
+    <link rel="stylesheet" href="~/lib/fancybox/dist/jquery.fancybox.min.css" />
+
+<div class="modal fade bd-example-modal-lg" id="ModalAddNew">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="JudulModalTambah">Add New Items</h4>
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <form id="form-tambah" role="form" enctype="multipart/form-data" asp-controller="PurchaseRequest" asp-action="AddingLine">
+                    <fieldset id="FieldModalTambah">
+                        @Html.HiddenFor(a=>a.HeaderTbl.RequisitionHeaderId, new { @id="AddRequisitionHeaderID", @value=@ViewBag.ReqID})
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Record Type</label>
+                                @Html.DropDownListFor(a=>a.LineTbl.RecordType, ViewBag.ListOfRecordType as SelectList, "", new { @id="AddRecordType", @class="form-control", @required="required" })
+                            </div>
+                            <div class="col-md-6">
+                                <label>Description</label>
+                                @Html.DropDownListFor(a=>a.LineTbl.RecordNo, ViewBag.ListOfRecordNo as SelectList, "", new { @id="AddRecordNo", @class="form-control", @required="required"})
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            @Html.TextAreaFor(a=>a.LineTbl.Description, new { @id="AddDescription", @class="form-control", @required="required"})
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Quantity</label>
+                                @Html.TextBoxFor(a=>a.LineTbl.Quantity, new { @id="AddQuantity", @class="form-control", @required="required", @type="number"})
+                            </div>
+                            <div class="col-md-6">
+                                <label>Unit Of Measure</label>
+                                @Html.DropDownListFor(a=>a.LineTbl.UnitofMeasure, ViewBag.ListOfUOM as SelectList, "", new { @id="AddUOM", @class="form-control", @required="required"})
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Expected Price</label>
+                                @Html.TextBoxFor(a=>a.LineTbl.UnitCost, new { @id="AddHarga", @class="form-control", @type="number", @required="required"})
+                            </div>
+                            <div class="col-md-6">
+                                <label>Vendor Name</label>
+                                @Html.DropDownListFor(a=>a.LineTbl.VendorNo, ViewBag.ListOfVendors as SelectList, "", new { @id="AddVendor", @class="form-control"})
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Per Item Request Notes</label>
+                            @Html.TextAreaFor(a=>a.LineTbl.RequestNotes, new { @id="AddRequestNotes", @class="form-control"})
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Images (1.5MB Max Size)</label>
+                                <input type="file" name="file" class="btn" id="file-location" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="TambahItem"><span class="fa fa-plus-circle"></span> Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Form Edit-->
+    <div class="modal fade bd-example-modal-lg" id="ModalEdit">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle">Edit</h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form-edit" role="form" enctype="multipart/form-data" asp-controller="PurchaseRequest" asp-action="EditLineProcess">
+                        <fieldset id="SubmitFormEdit">
+                            @Html.HiddenFor(a => a.LineTbl.RequisitionheaderId, new { @id = "RequisitionHeaderIdEdit" })
+                            @Html.HiddenFor(a => a.LineTbl.RequisitionLineId, new { @id = "RequisitionLineID" })
+                            @Html.HiddenFor(a => a.LineTbl.SeqLineNo, new { @id = "SeqLineNo" })
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <label>Record Type</label>
+                                    @Html.DropDownListFor(a => a.LineTbl.RecordType, ViewBag.ListOfRecordType as SelectList, "", new { @id = "RecordType", @class = "form-control", @required = "required" })
+                                </div>
+                                <div class="col-6">
+                                    <label>Description</label>
+                                    @Html.DropDownListFor(a => a.LineTbl.RecordNo, ViewBag.ListOfRecordNo as SelectList, "", new { @id = "RecordNo", @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                @Html.TextAreaFor(a => a.LineTbl.Description, new { @id = "Description", @class = "form-control", @placeholder = "Optional, Not Required" })
+                            </div>
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <label>Quantity</label>
+                                    @Html.TextBoxFor(a => a.LineTbl.Quantity, new { @id = "Quantity", @class = "form-control", @type = "number" })
+                                </div>
+                                <div class="col-6">
+                                    <label>Unit of Measure</label>
+                                    @Html.DropDownListFor(a => a.LineTbl.UnitofMeasure, ViewBag.ListOfUOM as SelectList, "", new { @id = "UOM", @class = "form-control", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-6">
+                                    <label>Expected Price</label>
+                                    @Html.TextBoxFor(a => a.LineTbl.UnitCost, new { @id = "UnitPrice", @class = "form-control", @type = "number", @placeholder = "Optional" })
+                                </div>
+                                <div class="col-6">
+                                    <label>Vendor Name</label>
+                                    @Html.DropDownListFor(a => a.LineTbl.VendorNo, ViewBag.ListOfVendors as SelectList, "", new { @id = "Vendors", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Per Item Request Note</label>
+                                @Html.TextAreaFor(a => a.LineTbl.RequestNotes, new { @id = "RequestNotes", @class = "form-control", @placeholder = "Optional" })
+                            </div>
+                            <div class="form-group">
+                                <a id="gambar-link">
+                                    <img id="gambar" title="Item Image" alt="Item Image" style="width:500px" />
+                                </a>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Images (1.5MB Max Size)</label>
+                                    <input type="file" name="file" class="btn" id="file-location-edit" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger" id="BtnEdit"><span class="fa fa-save"> Save</span></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}

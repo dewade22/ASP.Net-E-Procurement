@@ -1,0 +1,128 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\ASP.NET Program\\03-07-2019\\Balimoon E-Procurement\\Balimoon E-Procurement.csproj": {}
+  },
+  "projects": {
+    "D:\\ASP.NET Program\\03-07-2019\\Balimoon E-Procurement\\Balimoon E-Procurement.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\ASP.NET Program\\03-07-2019\\Balimoon E-Procurement\\Balimoon E-Procurement.csproj",
+        "projectName": "Balimoon E-Procurement",
+        "projectPath": "D:\\ASP.NET Program\\03-07-2019\\Balimoon E-Procurement\\Balimoon E-Procurement.csproj",
+        "packagesPath": "C:\\Users\\IT-Dev\\.nuget\\packages\\",
+        "outputPath": "D:\\ASP.NET Program\\03-07-2019\\Balimoon E-Procurement\\obj\\publish\\win-x64\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "D:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\IT-Dev\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "AsyncChromeDriver": {
+              "target": "Package",
+              "version": "[0.5.5, )"
+            },
+            "Fancybox": {
+              "target": "Package",
+              "version": "[2.1.5, )"
+            },
+            "HSTS": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "LazZiya.ImageResize": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
+            "Microsoft.AspNetCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.AspNetCore.Razor.Design": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.4, )"
+            },
+            "RandomGen": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            },
+            "Sendgrid": {
+              "target": "Package",
+              "version": "[9.12.0, )"
+            },
+            "Syncfusion.EJ": {
+              "target": "Package",
+              "version": "[17.2.0.51, )"
+            },
+            "Syncfusion.EJ2.AspNet.Core": {
+              "target": "Package",
+              "version": "[17.2.0.51, )"
+            },
+            "System.Security.Cryptography.OpenSsl": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            },
+            "WebEssentials.AspNetCore.PWA": {
+              "target": "Package",
+              "version": "[1.0.59, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    }
+  }
+}

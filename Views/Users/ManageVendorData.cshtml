@@ -1,0 +1,333 @@
+﻿@model Balimoon_E_Procurement.Models.VendorsModel
+
+@{
+    ViewData["Title"] = "ManageVendorData";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card-header">
+                    <h3 class="card-title">Manage Vendor Data</h3>
+                </div>
+                <div class="card-body">
+                    <table id="tabel5" class="table table-bordered table-striped display nowrap" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Company Name</th>
+                                <th>Company Address</th>
+                                <th>Contact Name</th>
+                                <th>Contact</th>
+                                <th>Configure ?</th>
+                                <th>Manage Vendor Data</th>
+                            </tr>
+                        </thead>
+                        <tbody id="SetUserList"></tbody>
+                    </table>
+                    <h5 class="text-danger">Before Adding Vendor data on Manage Vendor Data page, make sure the Company Account was confirmed on View Vendor Data page</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Styles{
+    <div class="modal fade bd-example-modal-lg" id="MyLargeModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="ModalTitle"></h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form1" role="form">
+                        <fieldset id="SubmitForm">
+                            @Html.HiddenFor(a => a.MainSystemVendorTbl.Id, new { @id = "Id" })
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                @Html.TextBoxFor(a => a.BalimoonBMLVendorTbl.VendorName, new { @id = "CompanyName", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Company Address</label>
+                                    @Html.TextAreaFor(a => a.BalimoonBMLVendorTbl.VendorAddress, new { @id = "CompanyAddress", @class = "form-control", @required = "required" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Company Address 2</label>
+                                    @Html.TextAreaFor(a => a.BalimoonBMLVendorTbl.VendorAddress2, new { @id = "CompanyAddress2", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Vendor City</label>
+                                @Html.TextBoxFor(a => a.BalimoonBMLVendorTbl.VendorCity, new { @id = "VendorCity", @class = "form-control", @required="required" })
+                                <span asp-validation-for="BalimoonBMLVendorTbl.VendorCity" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Contact Name</label>
+                                @Html.TextBoxFor(a => a.BalimoonBMLVendorTbl.VendorContact, new { @id = "ContactName", @class = "form-control", @required = "required" })
+                                <span asp-validation-for="BalimoonBMLVendorTbl.VendorContact" class="text-danger"></span>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Contact Number</label>
+                                    @Html.TextBoxFor(a => a.BalimoonBMLVendorTbl.VendorPhoneNo, new { @id = "Contact", @class = "form-control", @type="number", @required="required" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Fax Number</label>
+                                    @Html.TextBoxFor(a => a.BalimoonBMLVendorTbl.VendorFaxNo, new { @id = "Fax", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Vendor Posting Group</label>
+                                    @Html.DropDownListFor(a => a.BalimoonBMLVendorTbl.VendorPostingGroup, ViewBag.ListOfVendorPostingGroup as SelectList, "", new { @id = "VendorPostingGroup", @class = "form-control" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Currency</label>
+                                    @Html.DropDownListFor(a => a.BalimoonBMLVendorTbl.CurrencyCode, ViewBag.ListOfCurrency as SelectList, "", new { @id = "Currency", @class = "form-control", @required="required" })
+                                </div>    
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Payment Terms</label>
+                                    @Html.DropDownListFor(a => a.BalimoonBMLVendorTbl.PaymentTermsCode, ViewBag.ListOfPaymentTerms as SelectList, "", new { @id = "PaymentTerms", @class = "form-control", @required="required" })
+                                 </div>
+                                <div class="col-md-6">
+                                    <label>Country</label>
+                                    @Html.DropDownListFor(a => a.BalimoonBMLVendorTbl.Country, ViewBag.ListOfCountry as SelectList, "", new { @id = "Country", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Gen Business Posting Group</label>
+                                    @Html.DropDownListFor(a => a.BalimoonBMLVendorTbl.GenBusPostingGroup, ViewBag.ListOfGenBusPost as SelectList, "", new { @id = "GenBusPostingGroup", @class = "form-control" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>VAT Business Posting Group</label>
+                                    @Html.DropDownListFor(a => a.BalimoonBMLVendorTbl.VatbusPostingGroup, ViewBag.ListOfVatBussPost as SelectList, "", new { @id = "VATBusPost", @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Mobile No</label>
+                                    @Html.TextBoxFor(a => a.BalimoonBMLVendorTbl.MobileNo, new { @id = "MobileNo", @class = "form-control" })
+                                </div>
+                                <div class="col-md-6">
+                                    <label>E-Mail</label>
+                                    @Html.TextBoxFor(a => a.BalimoonBMLVendorTbl.Email, new { @id = "Email", @class = "form-control", @type="email", @required = "required" })
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <label>Location</label>
+                                    @Html.DropDownListFor(a => a.BalimoonBMLVendorTbl.LocationCode, ViewBag.ListOfLocations as SelectList, "", new { @id = "Locations", @class = "form-control" })
+                                    <span asp-validation-for="BalimoonBMLVendorTbl.LocationCode" class="text-danger"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>Swift Code</label>
+                                    @Html.TextBoxFor(a=>a.BalimoonBMLVendorTbl.swiftcode, new { @id="swiftcode", @class="form-control"})
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary" id="UpdateVendor" validation><span class="pe-7s-cloud-upload"></span> Save</button>
+                        </div>
+                    </form>
+                </div>   
+            </div>
+        </div>
+    </div>
+
+}
+
+@section Scripts{
+    <script>
+        $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+        $.fn.dataTable.moment("DD/MM/YYYY");
+
+        $("#tabel5").DataTable({
+            //Design Layout
+            stateSave: true,
+            autoWidth: true,
+            scrollX: true,
+            scrollY: false,
+
+            //ServerSide
+            processing: true,
+            serverSide: true,
+
+            //Paging Setup
+            paging: true,
+
+
+            //searching Setup
+            searching: { regex: true },
+
+            //ajax Filter
+            ajax: {
+                url: "/Users/GetVendorData",
+                //"dataSrc": '',
+                type: "POST",
+                contentType: "application/json",
+                dataType: "json",
+                data: function (d) {
+                    return JSON.stringify(d);
+                }
+            },
+
+            //column definition
+            columnDefs: [
+                {
+                    targets: [0],
+                    searchable: false,
+                    visible: false
+                },
+                { targets: "no-sort", orderable: false },
+                { targets: "no-search", searchable: false },
+                {
+                    targets: "trim",
+                    render: function (data, type, full, meta) {
+                        if (type === "display") {
+                            data = strtrunc(data, 10);
+                        }
+                        return data;
+                    }
+                },
+                { targets: "data-type", type: "date-eu" }
+            ],
+
+            columns: [
+                { data: "Id", isIdentity: true, visible: false },
+                { data: "CompanyName"},
+                { data: "Address"},
+                { data: "SalesName"},
+                { data: "SalesContact" },
+                {
+                    data: "VendorNo",
+                    render: function (data, row, type) {
+                        if (data) {
+                            data = "Configured"
+                        }
+                        else {
+                            data = "Not Configured"
+                        }
+                        return data;
+                    }
+                },
+                {
+                    render: function (data, type, full, meta) {
+                    return "<a href='#' onclick='VendorDetail(\""+full.Id+"\")' class='btn btn-block btn-outline-danger'><span class='pe-7s-note'> Manage Vendor</span></a>";
+
+                    }
+                }
+            ]
+        });
+        $(".dataTables_scrollHeadInner").css({"width":"100%"});
+        $(".table ").css({"width":"100%"});
+       
+    </script>
+<script>
+    $("#Locations").chosen();
+    $("#VATBusPost").chosen();
+    $("#GenBusPostingGroup").chosen();
+    $("#Country").chosen();
+    $("#PaymentTerms").chosen();
+    $("#Currency").chosen();
+    $("#VendorPostingGroup").chosen();
+    $('.chosen-container').css('width', '100%');
+</script>
+<script>
+     //showing Popup Modal Dialog
+        function VendorDetail(Id) {
+            var url = "/Users/GetVendorDataById?Id=" + Id;
+            $("#ModalTitle").html("ManageVendorData");
+            $("#MyLargeModal").modal();
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function (data) {
+                    var obj = JSON.parse(data);
+                    $("#Id").val(obj.Id);
+                    $("#CompanyName").val(obj.CompanyName);
+                    $("#CompanyAddress").val(obj.Address);
+                    $("#CompanyAddress2").val(obj.Address2); //mungkin tidak berisi value
+                    $("#ContactName").val(obj.ContactName);
+                    $("#Contact").val(obj.Contact);
+                    $("#Fax").val(obj.FaxNo); // mungkin tidak berisi value
+                    $("#VendorPostingGroup").val(obj.VendorPostingGroup);
+                    $("#VendorPostingGroup").trigger("chosen:updated");
+                    $("#Currency").val(obj.Currency);
+                    $("#Currency").trigger("chosen:updated");
+                    $("#PaymentTerms").val(obj.PaymentTerms);
+                    $("#PaymentTerms").trigger("chosen:updated");
+                    $("#Country").val(obj.Country);
+                    $("#Country").trigger("chosen:updated");
+                    $("#GenBusPostingGroup").val(obj.GenBusPostingGroup);
+                    $("#GenBusPostingGroup").trigger("chosen:updated");
+                    $("#MobileNo").val(obj.MobileNo); //mungkin tidak berisi value
+                    $("#Email").val(obj.Email);
+                    $("#VATBusPost").val(obj.VATBusPost);
+                    $("#VATBusPost").trigger("chosen:updated");
+                    $("#Locations").val(obj.Locations);
+                    $("#Locations").trigger("chosen:updated");
+                    $("#VendorCity").val(obj.VendorCity);
+                    $("#swiftcode").val(obj.swiftcode);
+                }
+            })
+        }
+</script>
+<script>
+    $(function () {
+        $("#MyLargeModal form").validate({
+            rules: {
+                CompanyName: {
+                    required: true
+                }
+            },
+            submitHandler: function (form) {
+                var getUser = document.getElementById('CompanyName').value;
+                 Swal.fire({
+                    title: 'Update Data Vendor',
+                    text: 'Are You Sure Want To Update '+getUser+' ?',
+                    type: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#002afc',
+                    cancelButtonColor: '#fc0303',
+                    confirmButtonText: 'Update!'
+                }).then((result) => {
+                    if (result.value) {
+                        $.ajax({
+                            url: '/Users/UpdateVendorDataBM',
+                            type: 'POST',
+                            data: $(form).serialize(),
+                            success: function (result) {
+                                if (result == "Sukses") {
+                                    Swal.fire(
+                                        'Saved!',
+                                        'Your file has been saved.',
+                                        'success'
+                                    ).then((result) => {
+                                        window.location.href = "/Users/ManageVendorData";
+                                        $("#MyLargeModal").modal("hide");
+                                    })
+                                }
+                                else {
+                                    Swal.fire({
+                                        type: 'error',
+                                        title: 'Oops...',
+                                        text: ''+result
+                                    })
+                                }
+                            }
+                        });
+                    }
+                })
+            }
+        })
+    })
+</script>
+}

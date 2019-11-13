@@ -1,0 +1,22 @@
+{
+
+  "name": "BalimoonE-Procurement",
+  "short_name": "BEP",
+  "description": "Balimoon E-Procurement for BML and BMI User to Make a Simple PR Flow",
+  "icons": [
+    {
+      "src": "PWA/icon3.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+   
+    {
+      "src": "PWA/icon4.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/"
+
+}

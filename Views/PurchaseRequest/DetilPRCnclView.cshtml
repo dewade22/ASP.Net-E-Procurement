@@ -1,0 +1,314 @@
+﻿@model Balimoon_E_Procurement.Models.BalimoonBML.ViewModel.PurchaseRequestVM
+@{
+    ViewData["Title"] = "Detil PR Cancelled";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>BalimOOn Liqueurs</h3>
+<section class="content">
+    <div class="card">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">Detil PR List</h4>
+                </div>
+                <div class="card-body">
+                    <form id="form" role="form">
+                        <div class="form-group">
+                            <input asp-for="HeaderTbl.RequisitionHeaderId" id="RequisitionHeaderId" class="form-control" disabled hidden />
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>PR Number</label>
+                                <input asp-for="HeaderTbl.RequisitionNo" id="RequisitionNo" class="form-control" disabled />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Status</label>
+                                <select asp-for="HeaderTbl.Status" id="Status" class="form-control" asp-items="@ViewBag.ListOfStatus" disabled></select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Requester</label>
+                                <input asp-for="HeaderTbl.RequesterId" id="Requester" class="form-control" disabled />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Department</label>
+                                <input asp-for="HeaderTbl.ShortcutDimension1Code" id="Department" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Order Date</label>
+                                <input asp-for="HeaderTbl.OrderDate" id="order" type="datetime-local" class="form-control" disabled />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Due Date</label>
+                                <input asp-for="HeaderTbl.DueDate" id="due" type="datetime-local" class="form-control" disabled />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <label>Priority</label>
+                                <select asp-for="HeaderTbl.Priority" id="Priority" class="form-control" asp-items="@ViewBag.ListOf123" disabled></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Request Notes</label>
+                            <textarea asp-for="HeaderTbl.RequestNotes" id="notes" class="form-control" disabled></textarea>
+                        </div>
+                        <div>
+                            <br />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" id="tabel">
+        <div class="row">
+            <div class="col-12">
+                <div class="card-header">
+                    <h4 class="card-title">List of Item in PR</h4>
+                </div>
+                <div class="card-body">
+                    <table id="tabel6" class="table table-primary">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>No</th>
+                                <th>Record Type</th>
+                                <th>Description</th>
+                                <th>Qty</th>
+                                <th>UoM</th>
+                                <th>Item Category</th>
+                                <th>Unit Cost</th>
+                                <th>Amount</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="6" style="text-align:right">Total:</th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <br />
+                    <button type="button" class="btn btn-danger" id="back"><span class="fa fa-arrow-circle-left"> Back</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section Scripts{
+<script type="text/javascript" src="~/lib/fancybox/dist/jquery.fancybox.min.js"></script>
+    <script>
+        $(document).ready(function () {
+           var PRID = document.getElementById('RequisitionHeaderId').value
+            $.fn.dataTable.moment("DD/MM/YYYY HH:mm:ss");
+            $.fn.dataTable.moment("DD/MM/YYYY");
+            $("#tabel6").DataTable({
+                //Design Layout
+                responsive: true,
+                stateSave: true,
+                autoWidth: true,
+                destroy: true,
+                scrollX: true,
+                //scrollY: 400,
+                scrollCollapse: true,
+                fixedColumns: true,
+
+                //server side
+                processing: true,
+                serverSide: true,
+
+                //Paging Setup
+                paging: true,
+
+                //searching Setup
+                searching: { regex: true },
+
+                //ajax Filter
+                ajax: {
+                    url: "/PurchaseRequest/TabelPRList?PRID=" + PRID,
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: function (d) {
+                        return JSON.stringify(d);
+                    }
+                },
+
+                //column definition
+                columnDefs: [
+                    { targets: "no-sort", orderable: false },
+                    { targets: "no-search", searchable: false },
+                    {
+                        targets: "trim",
+                        render: function (data, type, full, meta) {
+                            if (type === "display") {
+                                data = strtrunc(data, 10);
+                            }
+                            return data;
+                        }
+                    },
+                    { targets: "data-type", type: "date-eu" }
+                ],
+                columns: [
+                    { data: "LineID", isIdentity: true, visible: false },
+                    { data: "SeqLineNo" },
+                    { data: "recordtype" },
+                    { data: "description" },
+                    { data: "qty" },
+                    { data: "UoM" },
+                    { data: "itemcat" },
+                    { data: "UnitCost", render: $.fn.dataTable.render.number(',', '.', 2) },
+                    { data: "Amount", render: $.fn.dataTable.render.number(',', '.', 2) },
+                    {
+                        render: function (data, type, full, meta) {
+                            return "<a href='#' onclick='Details(\"" + full.LineID + "\")' class='btn btn-outline-info'><span class='pe-7s-info'> Details</span></a>";
+                        }
+                    }
+                ]
+            })
+        })
+    </script>
+    
+    <script>
+        $("#back").click(function () {
+            Swal.fire({
+                title: 'Back',
+                text: 'Are You Sure Want Go Back To PR Cancelled Page?',
+                type: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#002afc',
+                cancelButtonColor: '#fc0303',
+                confirmButtonText: 'Go Back'
+            }).then((result) => {
+                if (result.value) {
+                    window.location.href = "/PurchaseRequest/Cancelled";
+                }
+            })
+
+        })
+    </script>
+    <script>
+    function Details(LineID) {
+        var link = "/PurchaseRequest/ModalDetailPR?LineID=" + LineID;
+        $("#MyLargeModal").modal();
+        $.ajax({
+            type: "GET",
+            url: link,
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $("#LineID").val(obj.LineID);
+                $("#SeqLineNo").text(obj.SeqLineNo);
+                $("#RecordType").text(obj.RecordType);
+                $("#exampleModalLongTitle").html("Detil " + obj.PRNO+" Line "+obj.SeqLineNo);
+                $("#recordNo").text(obj.recordNo);
+                $("#Description").text(obj.Description);
+                $("#qty").text(obj.qty);
+                $("#UoM").text(obj.UoM);
+                $("#Vendor").text(obj.Vendor);
+                $("#CatCode").text(obj.CatCode);
+                $("#Cost").text(obj.Cost);
+                $("#Amount").text(obj.Amount);
+                var imagesrc = "/Images/PRImages/default.jpg"
+                if (obj.picture != null) {
+                    imagesrc = "/Images/PRImages/"+ obj.picture;
+                }
+                $("#mypict").attr("src", imagesrc);
+                $("#link-pict").attr("href", imagesrc);
+            }
+        })
+    }
+    </script>
+}
+@section Styles{
+<link rel="stylesheet" href="~/lib/fancybox/dist/jquery.fancybox.min.css" />
+    <div class="modal fade bd-example-modal-lg" id="MyLargeModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="exampleModalLongTitle"></h4>
+                    <a href="#" class="close" data-dismiss="modal">&times;</a>
+                </div>
+                <div class="modal-body">
+                    <form id="form" role="form">
+                        <fieldset id="SubmitForm">
+                            @Html.HiddenFor(a => a.LineTbl.RequisitionLineId, new { @id = "LineID" })
+                            <div class="form-row">
+                                <div class="col-md-6">
+                                    <table style="width:100%; position:relative; font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; font-size:15px">
+                                        <tr>
+                                            <td width="40%">No</td>
+                                            <td width="5%">:</td>
+                                            <td><span id="SeqLineNo"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Record Type</td>
+                                            <td>:</td>
+                                            <td><span id="RecordType"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Category Code</td>
+                                            <td>:</td>
+                                            <td><span id="CatCode"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Category</td>
+                                            <td>:</td>
+                                            <td><span id="recordNo"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Description</td>
+                                            <td>:</td>
+                                            <td><span id="Description"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Quantity</td>
+                                            <td>:</td>
+                                            <td><span id="qty"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Unit of Measure</td>
+                                            <td>:</td>
+                                            <td><span id="UoM"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vendor</td>
+                                            <td>:</td>
+                                            <td><span id="Vendor"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Unit Cost</td>
+                                            <td>:</td>
+                                            <td><span id="Cost"></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amount</td>
+                                            <td>:</td>
+                                            <td><span id="Amount"></span></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-md-6">
+                                    <span class="fa fa-images">Item Image</span><br />
+                                    <a id="link-pict" data-fancybox data-caption="Item Image on This PR">
+                                        <img id="mypict" alt="Item Image" style="width:300px; border-radius:5%" title="Item Image" />
+                                    </a>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
